@@ -1,15 +1,14 @@
+using DotnetMicroserviceArchitecture.CatalogAPI.Services.Abstract;
+using DotnetMicroserviceArchitecture.CatalogAPI.Services.Concrete;
+using DotnetMicroserviceArchitecture.CatalogAPI.Settings.Abstract;
+using DotnetMicroserviceArchitecture.CatalogAPI.Settings.Concrete;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DotnetMicroserviceArchitecture.CatalogAPI
 {
@@ -22,9 +21,22 @@ namespace DotnetMicroserviceArchitecture.CatalogAPI
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(Startup));
+
+            #region option pattern creat services
+
+            services.Configure<DatabaseSettings>(Configuration.GetSection(nameof(DatabaseSettings)));
+            services.AddSingleton<IDatabaseSettings>(options =>
+            {
+                return options.GetRequiredService<IOptions<DatabaseSettings>>().Value;
+            });
+
+            #endregion
+
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ICourseService, CourseService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -33,7 +45,6 @@ namespace DotnetMicroserviceArchitecture.CatalogAPI
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

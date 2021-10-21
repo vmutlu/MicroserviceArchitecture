@@ -59,7 +59,7 @@ namespace DotnetMicroserviceArchitecture.CatalogAPI.Services.Concrete
 
         public async Task<Response<List<CourseDTO>>> GetAllByUserIdAsync(string userId)
         {
-            var userCourses = await _courseCollection.Find<Course>(c => c.Id == userId).ToListAsync().ConfigureAwait(false);
+            var userCourses = await _courseCollection.Find<Course>(c => c.UserId == userId).ToListAsync().ConfigureAwait(false);
 
             if (!userCourses.Any())
                 userCourses = new();

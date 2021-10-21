@@ -1,11 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Apsiyon" Version="2.0.5" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Apsiyon" Version="2.0.5" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App"/>
+	</ItemGroup>
 
 </Project>

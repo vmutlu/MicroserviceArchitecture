@@ -1,4 +1,5 @@
-﻿using DotnetMicroserviceArchitecture.CatalogAPI.Dtos;
+﻿using DotnetMicroserviceArchitecture.CatalogAPI.Constants;
+using DotnetMicroserviceArchitecture.CatalogAPI.Dtos;
 using DotnetMicroserviceArchitecture.CatalogAPI.Services.Abstract;
 using DotnetMicroserviceArchitecture.Core.CustomControllerBase;
 using Microsoft.AspNetCore.Mvc;
@@ -11,13 +12,10 @@ namespace DotnetMicroserviceArchitecture.CatalogAPI.Controllers
     public class CategoriesController : BaseController
     {
         private readonly ICategoryService _categoryService;
-        public CategoriesController(ICategoryService categoryService)
-        {
-            _categoryService = categoryService;
-        }
+        public CategoriesController(ICategoryService categoryService) => (_categoryService) = (categoryService);
 
         // api/categories
-        [HttpGet("Categories")]
+        [HttpGet, Route(Route.HTTPGET_CATEGORIES)]
         public async Task<IActionResult> GetAll()
         {
             var result = await _categoryService.GetAllAsync().ConfigureAwait(false);
@@ -26,7 +24,7 @@ namespace DotnetMicroserviceArchitecture.CatalogAPI.Controllers
 
 
         // api/categories/{id}
-        [HttpGet("Categories/{id}")]
+        [HttpGet, Route(Route.HTTPGET_CATEGORIESBYID)]
         public async Task<IActionResult> GetById(string id)
         {
             var result = await _categoryService.GetByIdAsync(id).ConfigureAwait(false);
@@ -34,7 +32,7 @@ namespace DotnetMicroserviceArchitecture.CatalogAPI.Controllers
         }
 
         // api/categories
-        [HttpPost("Categories")]
+        [HttpPost, Route(Route.HTTPGET_CATEGORIES)]
         public async Task<IActionResult> AddCategory(CategoryDTO categoryDTO)
         {
             var result = await _categoryService.AddAsync(categoryDTO).ConfigureAwait(false);

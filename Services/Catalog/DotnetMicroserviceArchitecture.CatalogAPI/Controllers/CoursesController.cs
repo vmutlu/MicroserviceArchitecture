@@ -1,4 +1,5 @@
-﻿using DotnetMicroserviceArchitecture.CatalogAPI.Dtos;
+﻿using DotnetMicroserviceArchitecture.CatalogAPI.Constants;
+using DotnetMicroserviceArchitecture.CatalogAPI.Dtos;
 using DotnetMicroserviceArchitecture.CatalogAPI.Services.Abstract;
 using DotnetMicroserviceArchitecture.Core.CustomControllerBase;
 using Microsoft.AspNetCore.Mvc;
@@ -11,13 +12,10 @@ namespace DotnetMicroserviceArchitecture.CatalogAPI.Controllers
     public class CoursesController : BaseController
     {
         private readonly ICourseService _courseService;
-        public CoursesController(ICourseService courseService)
-        {
-            _courseService = courseService;
-        }
+        public CoursesController(ICourseService courseService) => (_courseService) = (courseService);
 
         // api/courses/courses
-        [HttpGet("Courses")]
+        [HttpGet, Route(Route.HTTPGET_COURSES)]
         public async Task<IActionResult> GetAll()
         {
             var response = await _courseService.GetAllAsync().ConfigureAwait(false);
@@ -26,7 +24,7 @@ namespace DotnetMicroserviceArchitecture.CatalogAPI.Controllers
         }
 
         // api/courses/{id}
-        [HttpGet("{id}")]
+        [HttpGet, Route(Route.HTTPGET_COURSESBYID)]
         public async Task<IActionResult> GetById(string id)
         {
             var response = await _courseService.GetByIdAsync(id).ConfigureAwait(false);
@@ -35,7 +33,7 @@ namespace DotnetMicroserviceArchitecture.CatalogAPI.Controllers
         }
 
         // api/courses/getallbyuserid/{id}
-        [HttpGet("GetAllByUserId/{userId}")]
+        [HttpGet, Route(Route.HTTPGET_COURSESBYUSERID)]
         public async Task<IActionResult> GetAllByUserId(string userId)
         {
             var response = await _courseService.GetAllByUserIdAsync(userId).ConfigureAwait(false);
@@ -44,7 +42,7 @@ namespace DotnetMicroserviceArchitecture.CatalogAPI.Controllers
         }
 
         // api/courses
-        [HttpPost("Courses")]
+        [HttpPost, Route(Route.HTTPGET_COURSES)]
         public async Task<IActionResult> AddCourse(CourseCreateDTO courseCreateDTO)
         {
             var response = await _courseService.AddAsync(courseCreateDTO).ConfigureAwait(false);
@@ -53,7 +51,7 @@ namespace DotnetMicroserviceArchitecture.CatalogAPI.Controllers
         }
 
         // api/courses
-        [HttpPut("Courses")]
+        [HttpPut, Route(Route.HTTPGET_COURSES)]
         public async Task<IActionResult> UpdateCourse(CourseUpdateDTO courseUpdateDTO)
         {
             var response = await _courseService.UpdateAsync(courseUpdateDTO).ConfigureAwait(false);
@@ -62,7 +60,7 @@ namespace DotnetMicroserviceArchitecture.CatalogAPI.Controllers
         }
 
         // api/courses
-        [HttpDelete("Courses")]
+        [HttpDelete, Route(Route.HTTPGET_COURSES)]
         public async Task<IActionResult> DeleteCourse(CourseDTO courseDTO)
         {
             var response = await _courseService.DeleteAsync(courseDTO).ConfigureAwait(false);

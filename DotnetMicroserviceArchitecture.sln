@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{13
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Catalog", "Catalog", "{08738BC8-124E-49D1-B9D9-A7D71119A0C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotnetMicroserviceArchitecture.CatalogAPI", "Services\Catalog\DotnetMicroserviceArchitecture.CatalogAPI\DotnetMicroserviceArchitecture.CatalogAPI.csproj", "{A21AF0ED-D4EE-402C-A2BC-3E82388D4674}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotnetMicroserviceArchitecture.CatalogAPI", "Services\Catalog\DotnetMicroserviceArchitecture.CatalogAPI\DotnetMicroserviceArchitecture.CatalogAPI.csproj", "{A21AF0ED-D4EE-402C-A2BC-3E82388D4674}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EF4C7306-1784-4242-85EF-0CDBC29338FF}"
 	ProjectSection(SolutionItems) = preProject
@@ -16,7 +16,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{D47F03A0-67DD-482B-98FD-82789A51AE18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotnetMicroserviceArchitecture.Core", "Shared\DotnetMicroserviceArchitecture.Core\DotnetMicroserviceArchitecture.Core.csproj", "{5682C3DB-6D96-4185-9084-FB0550645C73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotnetMicroserviceArchitecture.Core", "Shared\DotnetMicroserviceArchitecture.Core\DotnetMicroserviceArchitecture.Core.csproj", "{5682C3DB-6D96-4185-9084-FB0550645C73}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServer", "IdentityServer", "{B212149F-4158-4E95-867F-6844C21B43FD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotnetMicroserviceArchitecture.IdentityServer", "IdentityServer\DotnetMicroserviceArchitecture.IdentityServer\DotnetMicroserviceArchitecture.IdentityServer.csproj", "{A34050BC-3DED-467E-B539-B46A17B6A136}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +36,10 @@ Global
 		{5682C3DB-6D96-4185-9084-FB0550645C73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5682C3DB-6D96-4185-9084-FB0550645C73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5682C3DB-6D96-4185-9084-FB0550645C73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A34050BC-3DED-467E-B539-B46A17B6A136}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A34050BC-3DED-467E-B539-B46A17B6A136}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A34050BC-3DED-467E-B539-B46A17B6A136}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A34050BC-3DED-467E-B539-B46A17B6A136}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -40,6 +48,7 @@ Global
 		{08738BC8-124E-49D1-B9D9-A7D71119A0C4} = {1306549B-2835-4FD4-877A-1882AD85F68B}
 		{A21AF0ED-D4EE-402C-A2BC-3E82388D4674} = {08738BC8-124E-49D1-B9D9-A7D71119A0C4}
 		{5682C3DB-6D96-4185-9084-FB0550645C73} = {D47F03A0-67DD-482B-98FD-82789A51AE18}
+		{A34050BC-3DED-467E-B539-B46A17B6A136} = {B212149F-4158-4E95-867F-6844C21B43FD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C808A89E-1429-4D55-A4C4-BFBDB53EF947}

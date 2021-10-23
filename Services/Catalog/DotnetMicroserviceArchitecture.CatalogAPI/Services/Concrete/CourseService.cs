@@ -40,7 +40,7 @@ namespace DotnetMicroserviceArchitecture.CatalogAPI.Services.Concrete
                 });
 
             else
-                courses = new();
+                courses = new List<Course>();
 
             return Response<List<CourseDTO>>.Success(_mapper.Map<List<CourseDTO>>(courses), (int)HttpStatusCode.OK);
         }
@@ -62,7 +62,7 @@ namespace DotnetMicroserviceArchitecture.CatalogAPI.Services.Concrete
             var userCourses = await _courseCollection.Find<Course>(c => c.UserId == userId).ToListAsync().ConfigureAwait(false);
 
             if (!userCourses.Any())
-                userCourses = new();
+                userCourses = new List<Course>();
 
             else
                 userCourses.Select(async category =>

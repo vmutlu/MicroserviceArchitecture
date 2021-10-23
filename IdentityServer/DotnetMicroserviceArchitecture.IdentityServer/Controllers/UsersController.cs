@@ -1,14 +1,17 @@
 ﻿using DotnetMicroserviceArchitecture.Core.Dtos;
 using DotnetMicroserviceArchitecture.IdentityServer.DTOs;
 using DotnetMicroserviceArchitecture.IdentityServer.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using static IdentityServer4.IdentityServerConstants;
 
 namespace DotnetMicroserviceArchitecture.IdentityServer.Controllers
 {
+    [Authorize(LocalApi.PolicyName)]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -19,7 +22,7 @@ namespace DotnetMicroserviceArchitecture.IdentityServer.Controllers
             _userManager = userManager;
         }
 
-        [HttpPost]
+        [HttpPost("SignUp")]
         public async Task<IActionResult> SignUp(SignUpDTO signUpDTO)
         {
             var user = new ApplicationUser

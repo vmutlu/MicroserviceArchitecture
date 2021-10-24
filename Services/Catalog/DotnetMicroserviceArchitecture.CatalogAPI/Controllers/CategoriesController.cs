@@ -2,11 +2,13 @@
 using DotnetMicroserviceArchitecture.CatalogAPI.Dtos;
 using DotnetMicroserviceArchitecture.CatalogAPI.Services.Abstract;
 using DotnetMicroserviceArchitecture.Core.CustomControllerBase;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace DotnetMicroserviceArchitecture.CatalogAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CategoriesController : BaseController

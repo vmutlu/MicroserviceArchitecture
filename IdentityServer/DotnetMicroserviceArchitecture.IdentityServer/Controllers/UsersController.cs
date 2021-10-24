@@ -4,6 +4,7 @@ using DotnetMicroserviceArchitecture.IdentityServer.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -17,10 +18,7 @@ namespace DotnetMicroserviceArchitecture.IdentityServer.Controllers
     public class UsersController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        public UsersController(UserManager<ApplicationUser> userManager)
-        {
-            _userManager = userManager;
-        }
+        public UsersController(UserManager<ApplicationUser> userManager) => (_userManager) = (userManager);
 
         [HttpPost("SignUp")]
         public async Task<IActionResult> SignUp(SignUpDTO signUpDTO)
@@ -37,6 +35,20 @@ namespace DotnetMicroserviceArchitecture.IdentityServer.Controllers
                 return BadRequest(Response<NoContent>.Fail(result.Errors.Select(x => x.Description).ToList(), (int)HttpStatusCode.NotFound));
 
             return Ok(Response<NoContent>.Success((int)HttpStatusCode.NoContent));
+        }
+
+        [HttpGet("GetUserInfo")]
+        public async Task<IActionResult> GetUserInfo()
+        {
+            var userId = User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub);
+
+            if(userId is null) return BadRequest();
+
+            var user = await _userManager.FindByIdAsync(userId.Value).ConfigureAwait(false);
+
+            if (user is null) return BadRequest();
+
+            return Ok(user);
         }
     }
 }

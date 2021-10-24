@@ -2,8 +2,10 @@ using DotnetMicroserviceArchitecture.CatalogAPI.Services.Abstract;
 using DotnetMicroserviceArchitecture.CatalogAPI.Services.Concrete;
 using DotnetMicroserviceArchitecture.CatalogAPI.Settings.Abstract;
 using DotnetMicroserviceArchitecture.CatalogAPI.Settings.Concrete;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -38,10 +40,21 @@ namespace DotnetMicroserviceArchitecture.CatalogAPI
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICourseService, CourseService>();
 
-            services.AddControllers();
+            services.AddControllers(opt =>
+            {
+                opt.Filters.Add(new AuthorizeFilter()); //controller üzerine Authorize attributune gerek yok
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DotnetMicroserviceArchitecture.CatalogAPI", Version = "v1" });
+            });
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
+            {
+                opt.Authority = Configuration["IdentityServer"]; //token kontrolü
+                opt.Audience = "resource_catalog";
+                opt.RequireHttpsMetadata = false;
             });
         }
 
@@ -55,6 +68,8 @@ namespace DotnetMicroserviceArchitecture.CatalogAPI
             }
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

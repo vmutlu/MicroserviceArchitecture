@@ -55,6 +55,8 @@ namespace DotnetMicroserviceArchitecture.IdentityServer
                 .AddInMemoryClients(Config.Clients)
                 .AddAspNetIdentity<ApplicationUser>();
 
+            builder.AddResourceOwnerValidator<DotnetMicroserviceArchitecture.IdentityServer.Services.PasswordValidator>();
+
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
 

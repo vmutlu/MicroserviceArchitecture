@@ -1,5 +1,6 @@
 ﻿using IdentityServer4;
 using IdentityServer4.Models;
+using System;
 using System.Collections.Generic;
 
 namespace DotnetMicroserviceArchitecture.IdentityServer
@@ -17,6 +18,10 @@ namespace DotnetMicroserviceArchitecture.IdentityServer
         public static IEnumerable<IdentityResource> IdentityResources =>
                    new IdentityResource[]
                    {
+                       new IdentityResources.Email(),
+                       new IdentityResources.OpenId(),
+                       new IdentityResources.Profile(),
+                       new IdentityResource(){ Name = "roles",DisplayName="Roles",Description="Kullanıcı Rolleri",UserClaims = new[]{ "role" } },
                    };
 
         public static IEnumerable<ApiScope> ApiScopes =>
@@ -36,10 +41,35 @@ namespace DotnetMicroserviceArchitecture.IdentityServer
                           ClientId = "web.client",
                           ClientName = "Client Credentials Client",
 
-                          AllowedGrantTypes = GrantTypes.ClientCredentials,
+                          AllowedGrantTypes = GrantTypes.ClientCredentials, //reflesh token olmayacak
                           ClientSecrets = { new Secret("secret".Sha256()) },
 
                           AllowedScopes = { "catalog_fullpermission", "photo_stock_fullpermission", IdentityServerConstants.LocalApi.ScopeName }
+                      },
+
+                      new Client
+                      {
+                          ClientId = "client.user",
+                          ClientName = "Client Credentials Client For User",
+
+                          AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                          ClientSecrets = { new Secret("secret".Sha256()) },
+                          AllowOfflineAccess = true, // offline özelliği kullanabilmek için açıldı
+                          AllowedScopes =
+                          {
+                              IdentityServerConstants.StandardScopes.Email,
+                              IdentityServerConstants.StandardScopes.OpenId,
+                              IdentityServerConstants.StandardScopes.Address,
+                              IdentityServerConstants.StandardScopes.Profile,
+                              IdentityServerConstants.StandardScopes.OfflineAccess, // offline halde token almak için gerekli
+                              IdentityServerConstants.StandardScopes.Phone,
+                              IdentityServerConstants.LocalApi.ScopeName,
+                              "roles"
+                          },
+                          AccessTokenLifetime = (int)(DateTime.Now.AddHours(1) - DateTime.Now).TotalSeconds,
+                          RefreshTokenExpiration = TokenExpiration.Absolute,
+                          AbsoluteRefreshTokenLifetime = (int)(DateTime.Now.AddDays(30) - DateTime.Now).TotalSeconds,
+                          RefreshTokenUsage = TokenUsage.ReUse //reflesh token tekrar kullanılabilsin
                       }
                 };
     }

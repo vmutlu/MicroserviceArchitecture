@@ -20,6 +20,13 @@ namespace DotnetMicroserviceArchitecture.StockAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
+            {
+                opt.Authority = Configuration["IdentityServer"]; //token kontrolü
+                opt.Audience = "resource_stock";
+                opt.RequireHttpsMetadata = false;
+            });
+
             services.AddControllers(opt =>
             {
                 opt.Filters.Add(new AuthorizeFilter()); //controller üzerine Authorize attributune gerek yok
@@ -28,13 +35,6 @@ namespace DotnetMicroserviceArchitecture.StockAPI
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DotnetMicroserviceArchitecture.StockAPI", Version = "v1" });
-            });
-
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
-            {
-                opt.Authority = Configuration["IdentityServer"]; //token kontrolü
-                opt.Audience = "resource_stock";
-                opt.RequireHttpsMetadata = false;
             });
         }
 

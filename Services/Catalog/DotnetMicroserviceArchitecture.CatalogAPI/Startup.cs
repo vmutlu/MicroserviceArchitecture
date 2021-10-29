@@ -25,6 +25,13 @@ namespace DotnetMicroserviceArchitecture.CatalogAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
+            {
+                opt.Authority = Configuration["IdentityServer"]; //token kontrolü
+                opt.Audience = "resource_catalog";
+                opt.RequireHttpsMetadata = false;
+            });
+
             services.AddAutoMapper(typeof(Startup));
 
             #region option pattern creat services
@@ -48,13 +55,6 @@ namespace DotnetMicroserviceArchitecture.CatalogAPI
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DotnetMicroserviceArchitecture.CatalogAPI", Version = "v1" });
-            });
-
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
-            {
-                opt.Authority = Configuration["IdentityServer"]; //token kontrolü
-                opt.Audience = "resource_catalog";
-                opt.RequireHttpsMetadata = false;
             });
         }
 

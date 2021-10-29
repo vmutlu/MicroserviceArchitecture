@@ -17,6 +17,12 @@ namespace DotnetMicroserviceArchitecture.StockAPI.Controllers
     public class PhotosController : BaseController
     {
         [HttpPost]
+        public IActionResult Add()
+        {
+            return Ok("Geldim");
+        }
+
+        [HttpPost("AddImage")]
         public async Task<IActionResult> AddImage(IFormFile image, CancellationToken cancellationToken)
         {
             if (image != null && image.Length > decimal.Zero)

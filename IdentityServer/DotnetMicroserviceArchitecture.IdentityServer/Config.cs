@@ -11,7 +11,7 @@ namespace DotnetMicroserviceArchitecture.IdentityServer
          new ApiResource[]
                  {
                      new ApiResource("resource_catalog"){ Scopes={"catalog_fullpermission"} },
-                     new ApiResource("resource_photo_stock"){ Scopes={ "photo_stock_fullpermission" } },
+                     new ApiResource("resource_stock"){ Scopes={ "stock_fullpermission" } },
                      new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
                  };
 
@@ -28,7 +28,7 @@ namespace DotnetMicroserviceArchitecture.IdentityServer
            new ApiScope[]
                    {
                        new ApiScope("catalog_fullpermission","Catalog API"),
-                       new ApiScope("photo_stock_fullpermission","Photo Stock API"),
+                       new ApiScope("stock_fullpermission","Stock API"),
                        new ApiScope(IdentityServerConstants.LocalApi.ScopeName)
                    };
 
@@ -44,7 +44,7 @@ namespace DotnetMicroserviceArchitecture.IdentityServer
                           AllowedGrantTypes = GrantTypes.ClientCredentials, //reflesh token olmayacak
                           ClientSecrets = { new Secret("secret".Sha256()) },
 
-                          AllowedScopes = { "catalog_fullpermission", "photo_stock_fullpermission", IdentityServerConstants.LocalApi.ScopeName }
+                          AllowedScopes = { "catalog_fullpermission", "stock_fullpermission", IdentityServerConstants.LocalApi.ScopeName }
                       },
 
                       new Client
@@ -59,14 +59,12 @@ namespace DotnetMicroserviceArchitecture.IdentityServer
                           {
                               IdentityServerConstants.StandardScopes.Email,
                               IdentityServerConstants.StandardScopes.OpenId,
-                              IdentityServerConstants.StandardScopes.Address,
                               IdentityServerConstants.StandardScopes.Profile,
                               IdentityServerConstants.StandardScopes.OfflineAccess, // offline halde token almak için gerekli
-                              IdentityServerConstants.StandardScopes.Phone,
                               IdentityServerConstants.LocalApi.ScopeName,
                               "roles"
                           },
-                          AccessTokenLifetime = (int)(DateTime.Now.AddHours(1) - DateTime.Now).TotalSeconds,
+                          AccessTokenLifetime = 1*60*60,
                           RefreshTokenExpiration = TokenExpiration.Absolute,
                           AbsoluteRefreshTokenLifetime = (int)(DateTime.Now.AddDays(30) - DateTime.Now).TotalSeconds,
                           RefreshTokenUsage = TokenUsage.ReUse //reflesh token tekrar kullanılabilsin

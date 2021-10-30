@@ -14,7 +14,7 @@ namespace DotnetMicroserviceArchitecture.BasketAPI.Services.Concrete
             _port = port;
         }
 
-        public void Connect() => _connectionMultiplexer = ConnectionMultiplexer.Connect($"{_host}{_port}");
+        public void Connect() => _connectionMultiplexer = ConnectionMultiplexer.Connect($"{_host}:{_port}");
 
         public IDatabase GetDatabase(int database = 1) => _connectionMultiplexer.GetDatabase(database);
     }

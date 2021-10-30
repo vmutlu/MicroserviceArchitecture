@@ -13,7 +13,7 @@ namespace DotnetMicroserviceArchitecture.BasketAPI.Services.Concrete
 
         public BasketService(RedisService redisService) => (_redisService) = (redisService);
 
-        public async Task<Response<bool>> Add(BasketDTO basketDTO)
+        public async Task<Response<bool>> AddOrUpdate(BasketDTO basketDTO)
         {
             var status = await _redisService.GetDatabase().StringSetAsync(basketDTO.UserId, JsonSerializer.Serialize(basketDTO)).ConfigureAwait(false);
 
@@ -34,13 +34,6 @@ namespace DotnetMicroserviceArchitecture.BasketAPI.Services.Concrete
             if (string.IsNullOrWhiteSpace(exitsBasket)) return Response<BasketDTO>.Fail("Basket not found", HttpStatusCode.NotFound.GetHashCode());
 
             return Response<BasketDTO>.Success(JsonSerializer.Deserialize<BasketDTO>(exitsBasket), HttpStatusCode.OK.GetHashCode());
-        }
-
-        public async Task<Response<bool>> Update(BasketDTO basketDTO)
-        {
-            var status = await _redisService.GetDatabase().StringSetAsync(basketDTO.UserId, JsonSerializer.Serialize(basketDTO)).ConfigureAwait(false);
-
-            return status ? Response<bool>.Success(HttpStatusCode.OK.GetHashCode()) : Response<bool>.Fail("Basket could not update", HttpStatusCode.InternalServerError.GetHashCode());
         }
     }
 }

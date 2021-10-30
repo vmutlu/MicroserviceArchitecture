@@ -1,12 +1,19 @@
+using DotnetMicroserviceArchitecture.BasketAPI.Services.Abstract;
 using DotnetMicroserviceArchitecture.BasketAPI.Services.Concrete;
 using DotnetMicroserviceArchitecture.BasketAPI.Settings;
+using DotnetMicroserviceArchitecture.Core.Services.Abstract;
+using DotnetMicroserviceArchitecture.Core.Services.Concrete;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace DotnetMicroserviceArchitecture.BasketAPI
 {
@@ -21,6 +28,23 @@ namespace DotnetMicroserviceArchitecture.BasketAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var requireAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub"); //userId bilgisi taþýyan sub keywordunu mapleme
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
+            {
+                opt.Authority = Configuration["IdentityServer"]; //token kontrolü
+                opt.Audience = "resource_basket";
+                opt.RequireHttpsMetadata = false;
+            });
+
+            services.AddHttpContextAccessor();
+
+            services.AddScoped<IIdentityService, IdentityService>();
+
+            services.AddScoped<IBasketService, BasketService>();
+
             services.Configure<RedisSettings>(Configuration.GetSection("RedisSettings"));
 
             #region Redis Configuration and Redis Connect Process
@@ -38,7 +62,11 @@ namespace DotnetMicroserviceArchitecture.BasketAPI
 
             #endregion
 
-            services.AddControllers();
+            services.AddControllers(opt =>
+            {
+                opt.Filters.Add(new AuthorizeFilter(requireAuthorizePolicy)); //controller üzerine Authorize attributune gerek yok. Authentice olmuþ kullanýcý ister
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DotnetMicroserviceArchitecture.BasketAPI", Version = "v1" });

@@ -1,0 +1,6 @@
+Services
+- IdentityServer -> http://localhost:5000
+- CatalogAPI -> http://localhost:5001
+- StockAPI -> http://localhost:5002
+- BasketAPI -> http://localhost:5003
+- DiscountAPI -> http://localhost:5004

@@ -4,4 +4,8 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DotnetMicroserviceArchitecture.Order.Core\DotnetMicroserviceArchitecture.Order.Core.csproj" />
+  </ItemGroup>
+
 </Project>

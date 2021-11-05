@@ -4,4 +4,15 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\DotnetMicroserviceArchitecture.Core\DotnetMicroserviceArchitecture.Core.csproj" />
+    <ProjectReference Include="..\DotnetMicroserviceArchitecture.Order.Domain\DotnetMicroserviceArchitecture.Order.Domain.csproj" />
+    <ProjectReference Include="..\DotnetMicroserviceArchitecture.Order.Infrastructure\DotnetMicroserviceArchitecture.Order.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

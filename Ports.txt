@@ -6,3 +6,6 @@ Services
 - DiscountAPI -> http://localhost:5004
 - OrderAPI -> http://localhost:5005
 - PaymentAPI -> http://localhost:5006
+
+Gateways
+- Gateway -> http://localhost:5010

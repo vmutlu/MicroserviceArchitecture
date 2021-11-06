@@ -14,6 +14,7 @@ namespace DotnetMicroserviceArchitecture.IdentityServer
                      new ApiResource("resource_stock"){ Scopes={ "stock_fullpermission" } },
                      new ApiResource("resource_basket"){ Scopes={ "basket_fullpermission" } },
                      new ApiResource("resource_discount"){ Scopes={ "discount_fullpermission" } },
+                     new ApiResource("resource_order"){ Scopes={ "order_fullpermission" } },
                      new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
                  };
 
@@ -33,6 +34,7 @@ namespace DotnetMicroserviceArchitecture.IdentityServer
                        new ApiScope("stock_fullpermission","Stock API"),
                        new ApiScope("basket_fullpermission","Basket API"),
                        new ApiScope("discount_fullpermission","Discount API"),
+                       new ApiScope("order_fullpermission","Order API"),
                        new ApiScope(IdentityServerConstants.LocalApi.ScopeName)
                    };
 
@@ -61,6 +63,7 @@ namespace DotnetMicroserviceArchitecture.IdentityServer
                           AllowOfflineAccess = true, // offline özelliği kullanabilmek için açıldı
                           AllowedScopes =
                           {
+                              "order_fullpermission",
                               "discount_fullpermission",
                               "basket_fullpermission",
                               IdentityServerConstants.StandardScopes.Email,

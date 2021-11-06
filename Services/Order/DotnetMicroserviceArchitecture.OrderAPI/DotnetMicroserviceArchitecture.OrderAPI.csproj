@@ -12,11 +12,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.11">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\..\..\Shared\DotnetMicroserviceArchitecture.Core\DotnetMicroserviceArchitecture.Core.csproj" />
+    <ProjectReference Include="..\DotnetMicroserviceArchitecture.Order.Application\DotnetMicroserviceArchitecture.Order.Application.csproj" />
+    <ProjectReference Include="..\DotnetMicroserviceArchitecture.Order.Infrastructure\DotnetMicroserviceArchitecture.Order.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

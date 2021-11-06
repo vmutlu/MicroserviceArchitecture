@@ -16,6 +16,11 @@ namespace DotnetMicroserviceArchitecture.Order.Domain.Aggregate
 
         public IReadOnlyCollection<OrderItem> OrderItems => _orderItems;
 
+        public Order()
+        {
+
+        }
+
         public Order(string buyerId, Adress adress)
         {
             _orderItems = new();
@@ -26,7 +31,7 @@ namespace DotnetMicroserviceArchitecture.Order.Domain.Aggregate
 
         public void AddOrderItem(string orderId, string name, string uRL, decimal price)
         {
-            var exits = _orderItems.Any(x => x.OrderId == orderId);
+            var exits = _orderItems.Any(x => x.ProductId == orderId);
             if (!exits)
                 _orderItems.Add(new OrderItem(orderId, name, uRL, price));
         }

@@ -15,6 +15,7 @@ namespace DotnetMicroserviceArchitecture.IdentityServer
                      new ApiResource("resource_basket"){ Scopes={ "basket_fullpermission" } },
                      new ApiResource("resource_discount"){ Scopes={ "discount_fullpermission" } },
                      new ApiResource("resource_order"){ Scopes={ "order_fullpermission" } },
+                     new ApiResource("resource_payment"){ Scopes={ "payment_fullpermission" } },
                      new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
                  };
 
@@ -35,6 +36,7 @@ namespace DotnetMicroserviceArchitecture.IdentityServer
                        new ApiScope("basket_fullpermission","Basket API"),
                        new ApiScope("discount_fullpermission","Discount API"),
                        new ApiScope("order_fullpermission","Order API"),
+                       new ApiScope("payment_fullpermission","Payment API"),
                        new ApiScope(IdentityServerConstants.LocalApi.ScopeName)
                    };
 
@@ -66,6 +68,7 @@ namespace DotnetMicroserviceArchitecture.IdentityServer
                               "order_fullpermission",
                               "discount_fullpermission",
                               "basket_fullpermission",
+                              "payment_fullpermission",
                               IdentityServerConstants.StandardScopes.Email,
                               IdentityServerConstants.StandardScopes.OpenId,
                               IdentityServerConstants.StandardScopes.Profile,

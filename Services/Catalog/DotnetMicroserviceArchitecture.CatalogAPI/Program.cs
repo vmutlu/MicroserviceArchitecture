@@ -1,11 +1,8 @@
+using DotnetMicroserviceArchitecture.CatalogAPI.Services.Abstract;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace DotnetMicroserviceArchitecture.CatalogAPI
 {
@@ -13,7 +10,33 @@ namespace DotnetMicroserviceArchitecture.CatalogAPI
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();
+
+            using (var scope = host.Services.CreateScope())
+            {
+                var serviceProvider = scope.ServiceProvider;
+                var catalogService = serviceProvider.GetRequiredService<ICategoryService>();
+
+                if (!catalogService.GetAllAsync().Result.Data.Any())
+                {
+                    catalogService.AddAsync(new Dtos.CategoryDTO()
+                    {
+                        Name = "Example Category - 1"
+                    }).Wait();
+
+                    catalogService.AddAsync(new Dtos.CategoryDTO()
+                    {
+                        Name = "Example Category - 2"
+                    }).Wait();
+
+                    catalogService.AddAsync(new Dtos.CategoryDTO()
+                    {
+                        Name = "Example Category - 3"
+                    }).Wait();
+                }
+            }
+
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

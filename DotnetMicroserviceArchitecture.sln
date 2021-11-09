@@ -48,11 +48,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotnetMicroserviceArchitect
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Payment", "Payment", "{93A6C9DE-F459-4169-87AF-6626ACB68F76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotnetMicroserviceArchitecture.PaymentAPI", "Services\Payment\DotnetMicroserviceArchitecture.PaymentAPI\DotnetMicroserviceArchitecture.PaymentAPI.csproj", "{84D787A1-7724-4B96-878A-5FFBB22B35E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotnetMicroserviceArchitecture.PaymentAPI", "Services\Payment\DotnetMicroserviceArchitecture.PaymentAPI\DotnetMicroserviceArchitecture.PaymentAPI.csproj", "{84D787A1-7724-4B96-878A-5FFBB22B35E0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateways", "Gateways", "{08366788-BC16-4D96-B7C5-B4EE210E09BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotnetMicroserviceArchitecture.Gateway", "Gateways\DotnetMicroserviceArchitecture.Gateway\DotnetMicroserviceArchitecture.Gateway.csproj", "{256A520F-01FF-4C8F-AA4B-75727D0DA2BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotnetMicroserviceArchitecture.Gateway", "Gateways\DotnetMicroserviceArchitecture.Gateway\DotnetMicroserviceArchitecture.Gateway.csproj", "{256A520F-01FF-4C8F-AA4B-75727D0DA2BF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{84568702-4E6A-4162-B12A-9AA7B2051AC1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotnetMicroserviceArchitecture.UI", "UI\DotnetMicroserviceArchitecture.UI\DotnetMicroserviceArchitecture.UI.csproj", "{95AF3F68-0367-4A7C-A80D-042E2F512108}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -112,6 +116,10 @@ Global
 		{256A520F-01FF-4C8F-AA4B-75727D0DA2BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{256A520F-01FF-4C8F-AA4B-75727D0DA2BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{256A520F-01FF-4C8F-AA4B-75727D0DA2BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95AF3F68-0367-4A7C-A80D-042E2F512108}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95AF3F68-0367-4A7C-A80D-042E2F512108}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95AF3F68-0367-4A7C-A80D-042E2F512108}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95AF3F68-0367-4A7C-A80D-042E2F512108}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -136,6 +144,7 @@ Global
 		{93A6C9DE-F459-4169-87AF-6626ACB68F76} = {1306549B-2835-4FD4-877A-1882AD85F68B}
 		{84D787A1-7724-4B96-878A-5FFBB22B35E0} = {93A6C9DE-F459-4169-87AF-6626ACB68F76}
 		{256A520F-01FF-4C8F-AA4B-75727D0DA2BF} = {08366788-BC16-4D96-B7C5-B4EE210E09BD}
+		{95AF3F68-0367-4A7C-A80D-042E2F512108} = {84568702-4E6A-4162-B12A-9AA7B2051AC1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C808A89E-1429-4D55-A4C4-BFBDB53EF947}

@@ -9,3 +9,6 @@ Services
 
 Gateways
 - Gateway -> http://localhost:5010
+
+UI
+- WebUI -> http://localhost:5020

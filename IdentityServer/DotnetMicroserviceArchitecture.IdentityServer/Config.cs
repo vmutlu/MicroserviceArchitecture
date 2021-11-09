@@ -16,6 +16,7 @@ namespace DotnetMicroserviceArchitecture.IdentityServer
                      new ApiResource("resource_discount"){ Scopes={ "discount_fullpermission" } },
                      new ApiResource("resource_order"){ Scopes={ "order_fullpermission" } },
                      new ApiResource("resource_payment"){ Scopes={ "payment_fullpermission" } },
+                     new ApiResource("resource_gateway"){ Scopes={ "gateway_fullpermission" } },
                      new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
                  };
 
@@ -37,6 +38,7 @@ namespace DotnetMicroserviceArchitecture.IdentityServer
                        new ApiScope("discount_fullpermission","Discount API"),
                        new ApiScope("order_fullpermission","Order API"),
                        new ApiScope("payment_fullpermission","Payment API"),
+                       new ApiScope("gateway_fullpermission","Gateway API"),
                        new ApiScope(IdentityServerConstants.LocalApi.ScopeName)
                    };
 
@@ -52,7 +54,7 @@ namespace DotnetMicroserviceArchitecture.IdentityServer
                           AllowedGrantTypes = GrantTypes.ClientCredentials, //reflesh token olmayacak
                           ClientSecrets = { new Secret("secret".Sha256()) },
 
-                          AllowedScopes = { "catalog_fullpermission", "stock_fullpermission", IdentityServerConstants.LocalApi.ScopeName }
+                          AllowedScopes = { "gateway_fullpermission", "catalog_fullpermission", "stock_fullpermission", IdentityServerConstants.LocalApi.ScopeName }
                       },
 
                       new Client
@@ -65,6 +67,7 @@ namespace DotnetMicroserviceArchitecture.IdentityServer
                           AllowOfflineAccess = true, // offline özelliği kullanabilmek için açıldı
                           AllowedScopes =
                           {
+                              "gateway_fullpermission",
                               "order_fullpermission",
                               "discount_fullpermission",
                               "basket_fullpermission",

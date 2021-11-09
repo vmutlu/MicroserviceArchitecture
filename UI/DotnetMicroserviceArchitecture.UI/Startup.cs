@@ -1,3 +1,4 @@
+using DotnetMicroserviceArchitecture.UI.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -14,6 +15,8 @@ namespace DotnetMicroserviceArchitecture.UI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<ClientSettings>(Configuration.GetSection("ClientSettings"));
+
             services.Configure<ApiSettings>(Configuration.GetSection("ApiSettings"));
 
             services.AddControllersWithViews();

@@ -34,15 +34,57 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
             _clientSettings = clientSettings.Value;
         }
 
-        public Task<TokenResponse> GetAccessTokenByRefleshToken()
+        public async Task<TokenResponse> GetAccessTokenByRefleshToken()
+        {
+            // resource: https://identityserver4.readthedocs.io/en/latest/endpoints/discovery.html?highlight=discovery%20end
+            // get endpoints
+            var discoveryDocument = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
+            {
+                Address = _apiSettings.BaseURL,
+                Policy = new DiscoveryPolicy() { RequireHttps = false } //default https closed
+            }).ConfigureAwait(false);
+
+            if (discoveryDocument.IsError)
+                throw discoveryDocument.Exception;
+
+            var refreshToken = await _httpContextAccessor.HttpContext.GetTokenAsync(OpenIdConnectParameterNames.RefreshToken).ConfigureAwait(false);
+
+            RefreshTokenRequest refreshTokenRequest = new()
+            {
+                ClientId = _clientSettings.WebClientSettings.ClientId,
+                ClientSecret = _clientSettings.WebClientSettings.ClientSecret,
+                RefreshToken = refreshToken,
+                Address = discoveryDocument.TokenEndpoint
+            };
+
+            var token = await _httpClient.RequestRefreshTokenAsync(refreshTokenRequest).ConfigureAwait(false);
+
+            if (token.IsError)
+                return null;
+
+            var authenticationToken = new List<AuthenticationToken>() {
+                new AuthenticationToken { Name = OpenIdConnectParameterNames.AccessToken, Value = token.AccessToken } ,
+                new AuthenticationToken { Name = OpenIdConnectParameterNames.RefreshToken, Value = token.RefreshToken },
+                new AuthenticationToken { Name = OpenIdConnectParameterNames.ExpiresIn, Value = DateTime.Now.AddSeconds(token.ExpiresIn).ToString("o",CultureInfo.InvariantCulture) }
+            };
+
+            var authenticationResult = await _httpContextAccessor.HttpContext.AuthenticateAsync().ConfigureAwait(false);
+
+            //tekrar almak yerine alınanı güncelle
+            var properties = authenticationResult.Properties;
+            properties.StoreTokens(authenticationToken);
+
+            //cookie update
+            await _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, authenticationResult.Principal, properties).ConfigureAwait(false);
+
+            return token;
+        }
+
+        public async Task RemoveRefleshToken()
         {
             throw new NotImplementedException();
         }
 
-        public Task RemoveRefleshToken()
-        {
-            throw new NotImplementedException();
-        }
 
         public async Task<Response<bool>> SignIn(SignInModel signInModel)
         {

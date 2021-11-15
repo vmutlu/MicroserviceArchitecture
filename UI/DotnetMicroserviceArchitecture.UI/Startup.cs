@@ -33,7 +33,7 @@ namespace DotnetMicroserviceArchitecture.UI
             services.AddHttpClient<IUserService, UserService>(options =>
             {
                 options.BaseAddress = new Uri(apiSettings.IdentityURL);
-            }).AddHttpMessageHandler<ResourceOwnerTokenHandler>();
+            }).AddHttpMessageHandler<ResourceOwnerTokenHandler>();//her istekte headere token bilgisi eklemesi için
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
             {

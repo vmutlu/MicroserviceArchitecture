@@ -40,7 +40,7 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
             // get endpoints
             var discoveryDocument = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
             {
-                Address = _apiSettings.BaseURL,
+                Address = _apiSettings.IdentityURL,
                 Policy = new DiscoveryPolicy() { RequireHttps = false } //default https closed
             }).ConfigureAwait(false);
 
@@ -84,7 +84,7 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
         {
             var discoveryDocument = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
             {
-                Address = _apiSettings.BaseURL,
+                Address = _apiSettings.IdentityURL,
                 Policy = new DiscoveryPolicy() { RequireHttps = false } //default https closed
             }).ConfigureAwait(false);
 
@@ -113,7 +113,7 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
             // get endpoints
             var discoveryDocument = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
             {
-                Address = _apiSettings.BaseURL,
+                Address = _apiSettings.IdentityURL,
                 Policy = new DiscoveryPolicy() { RequireHttps = false } //default https closed
             }).ConfigureAwait(false);
 

@@ -82,7 +82,28 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
 
         public async Task RemoveRefleshToken()
         {
-            throw new NotImplementedException();
+            var discoveryDocument = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
+            {
+                Address = _apiSettings.BaseURL,
+                Policy = new DiscoveryPolicy() { RequireHttps = false } //default https closed
+            }).ConfigureAwait(false);
+
+            if (discoveryDocument.IsError)
+                throw discoveryDocument.Exception;
+
+            var refreshToken = await _httpContextAccessor.HttpContext.GetTokenAsync(OpenIdConnectParameterNames.RefreshToken).ConfigureAwait(false);
+
+            //revoke refreshToken
+            TokenRevocationRequest tokenRevocationRequest = new()
+            {
+                ClientId = _clientSettings.UserClientSettings.ClientId,
+                ClientSecret = _clientSettings.UserClientSettings.ClientSecret,
+                Address = discoveryDocument.RevocationEndpoint,
+                Token = refreshToken,
+                TokenTypeHint = "refresh_token" // resource: identity documentation
+            };
+
+            await _httpClient.RevokeTokenAsync(tokenRevocationRequest).ConfigureAwait(false);
         }
 
 

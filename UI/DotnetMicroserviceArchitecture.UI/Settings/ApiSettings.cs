@@ -2,7 +2,8 @@
 {
     public class ApiSettings
     {
-        public string BaseURL { get; set; }
+        public string IdentityURL { get; set; }
+        public string GatewayURL { get; set; }
         public string ImageURL { get; set; }
     }
 }

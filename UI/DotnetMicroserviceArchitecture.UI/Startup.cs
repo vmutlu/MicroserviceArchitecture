@@ -1,3 +1,4 @@
+using DotnetMicroserviceArchitecture.UI.Handler;
 using DotnetMicroserviceArchitecture.UI.Services.Abstract;
 using DotnetMicroserviceArchitecture.UI.Services.Concrete;
 using DotnetMicroserviceArchitecture.UI.Settings;
@@ -26,6 +27,13 @@ namespace DotnetMicroserviceArchitecture.UI
             services.Configure<ClientSettings>(Configuration.GetSection("ClientSettings"));
 
             services.Configure<ApiSettings>(Configuration.GetSection("ApiSettings"));
+
+            var apiSettings = Configuration.GetSection("ApiSettings").Get<ApiSettings>();
+
+            services.AddHttpClient<IUserService, UserService>(options =>
+            {
+                options.BaseAddress = new Uri(apiSettings.IdentityURL);
+            }).AddHttpMessageHandler<ResourceOwnerTokenHandler>();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
             {

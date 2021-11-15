@@ -16,6 +16,6 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
         }
 
         // */ GetFromJsonAsync */ Net 5.0 Automatic deserialize 
-        public async Task<UserView> GetUserAsync() => await _httpClient.GetFromJsonAsync<UserView>("/api/user/getuser").ConfigureAwait(false);
+        public async Task<UserView> GetUserAsync() => await _httpClient.GetFromJsonAsync<UserView>("/api/users/getUserInfo").ConfigureAwait(false);
     }
 }

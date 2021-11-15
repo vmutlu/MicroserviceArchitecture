@@ -45,7 +45,7 @@ namespace DotnetMicroserviceArchitecture.UI.Controllers
 
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme).ConfigureAwait(false);
             await _identityService.RemoveRefleshToken().ConfigureAwait(false);
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }

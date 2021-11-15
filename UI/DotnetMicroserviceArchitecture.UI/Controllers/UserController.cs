@@ -15,6 +15,6 @@ namespace DotnetMicroserviceArchitecture.UI.Controllers
             _userService = userService;
         }
 
-        public async Task<IActionResult> GetUser() => View(await _userService.GetUserAsync().ConfigureAwait(false));
+        public async Task<IActionResult> MyProfile() => View(await _userService.GetUserAsync().ConfigureAwait(false));
     }
 }

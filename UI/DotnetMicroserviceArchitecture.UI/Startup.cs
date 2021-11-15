@@ -22,6 +22,8 @@ namespace DotnetMicroserviceArchitecture.UI
         {
             services.AddHttpClient<IIdentityService, IdentityService>();
 
+            services.AddScoped<ResourceOwnerTokenHandler>();
+
             services.AddHttpContextAccessor();
 
             services.Configure<ClientSettings>(Configuration.GetSection("ClientSettings"));

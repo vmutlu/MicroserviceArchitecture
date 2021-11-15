@@ -15,9 +15,9 @@ namespace DotnetMicroserviceArchitecture.UI.Handler
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IIdentityService _identityService;
-        private readonly ILogger _logger;
+        private readonly ILogger<ResourceOwnerTokenHandler> _logger;
 
-        public ResourceOwnerTokenHandler(ILogger logger, IHttpContextAccessor httpContextAccessor, IIdentityService identityService)
+        public ResourceOwnerTokenHandler(ILogger<ResourceOwnerTokenHandler> logger, IHttpContextAccessor httpContextAccessor, IIdentityService identityService)
         {
             _logger = logger;
             _identityService = identityService;
@@ -30,7 +30,7 @@ namespace DotnetMicroserviceArchitecture.UI.Handler
         {
             var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken).ConfigureAwait(false);
 
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer ", accessToken);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             var response = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
 
@@ -40,7 +40,7 @@ namespace DotnetMicroserviceArchitecture.UI.Handler
 
                 if (newAcccessToken is not null)
                 {
-                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer ", newAcccessToken.AccessToken);
+                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", newAcccessToken.AccessToken);
 
                     response = await base.SendAsync(request, cancellationToken).ConfigureAwait(false); // re send request
                 }

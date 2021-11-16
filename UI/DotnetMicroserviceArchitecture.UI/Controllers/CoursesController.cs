@@ -19,7 +19,7 @@ namespace DotnetMicroserviceArchitecture.UI.Controllers
             _identityService = identityService;
         }
 
-        public async Task<IActionResult> Index() => View(await _catalogService.GetAllByUserIdAsync(_identityService.GetUserId).ConfigureAwait(false));
+        public async Task<IActionResult> GetAllByUserAsync() => View(await _catalogService.GetAllByUserIdAsync(_identityService.GetUserId).ConfigureAwait(false));
 
         public async Task<IActionResult> Create()
         {
@@ -42,7 +42,7 @@ namespace DotnetMicroserviceArchitecture.UI.Controllers
 
             await _catalogService.AddAsync(courseView).ConfigureAwait(false);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(GetAllByUserAsync));
         }
 
         public async Task<IActionResult> Update(string id)
@@ -51,7 +51,7 @@ namespace DotnetMicroserviceArchitecture.UI.Controllers
             var categories = await _catalogService.GetAllCategoryAsync().ConfigureAwait(false);
 
             if (course == null)
-                RedirectToAction(nameof(Index));
+                RedirectToAction(nameof(GetAllByUserAsync));
 
             ViewBag.categoryList = new SelectList(categories, "Id", "Name", course.Id);
             CourseUpdateContract courseUpdate = new()
@@ -80,14 +80,14 @@ namespace DotnetMicroserviceArchitecture.UI.Controllers
             }
             await _catalogService.UpdateAsync(courseView).ConfigureAwait(false);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(GetAllByUserAsync));
         }
 
         public async Task<IActionResult> Delete(string id)
         {
             await _catalogService.DeleteAsync(id).ConfigureAwait(false);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(GetAllByUserAsync));
         }
     }
 }

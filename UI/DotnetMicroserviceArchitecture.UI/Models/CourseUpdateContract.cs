@@ -1,4 +1,6 @@
-﻿namespace DotnetMicroserviceArchitecture.UI.Models
+﻿using Microsoft.AspNetCore.Http;
+
+namespace DotnetMicroserviceArchitecture.UI.Models
 {
     public class CourseUpdateContract
     {
@@ -10,5 +12,6 @@
         public string Picture { get; set; }
         public string CategoryId { get; set; }
         public FeaturesView FeaturesView { get; set; }
+        public IFormFile PictureFile { get; set; }
     }
 }

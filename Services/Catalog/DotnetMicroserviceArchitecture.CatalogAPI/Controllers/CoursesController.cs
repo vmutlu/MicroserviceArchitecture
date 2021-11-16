@@ -60,10 +60,10 @@ namespace DotnetMicroserviceArchitecture.CatalogAPI.Controllers
         }
 
         // api/courses
-        [HttpDelete, Route(Route.HTTPGET_COURSES)]
-        public async Task<IActionResult> DeleteCourse(CourseDTO courseDTO)
+        [HttpDelete, Route(Route.HTTPGET_COURSESBYID)]
+        public async Task<IActionResult> DeleteCourse(string courseId)
         {
-            var response = await _courseService.DeleteAsync(courseDTO).ConfigureAwait(false);
+            var response = await _courseService.DeleteAsync(courseId).ConfigureAwait(false);
 
             return Result(response);
         }

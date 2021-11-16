@@ -95,9 +95,9 @@ namespace DotnetMicroserviceArchitecture.CatalogAPI.Services.Concrete
             return Response<NoContent>.Success((int)HttpStatusCode.NoContent);
         }
 
-        public async Task<Response<NoContent>> DeleteAsync(CourseDTO courseDTO)
+        public async Task<Response<NoContent>> DeleteAsync(string courseId)
         {
-            var result = await _courseCollection.DeleteOneAsync<Course>(c => c.Id == courseDTO.Id).ConfigureAwait(false);
+            var result = await _courseCollection.DeleteOneAsync<Course>(c => c.Id == courseId).ConfigureAwait(false);
 
             if (result.DeletedCount > decimal.Zero)
                 return Response<NoContent>.Success((int)HttpStatusCode.NoContent);

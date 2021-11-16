@@ -1,7 +1,9 @@
-﻿using DotnetMicroserviceArchitecture.UI.Models;
+﻿using DotnetMicroserviceArchitecture.Core.Dtos;
+using DotnetMicroserviceArchitecture.UI.Models;
 using DotnetMicroserviceArchitecture.UI.Services.Abstract;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
@@ -15,39 +17,93 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
             _httpClient = httpClient;
         }
 
-        public Task<bool> AddAsync(CourseCreateContract courseCreateContract)
+        public async Task<bool> AddAsync(CourseCreateContract courseCreateContract)
         {
-            throw new System.NotImplementedException();
+            var response = await _httpClient.PostAsJsonAsync<CourseCreateContract>("courses", courseCreateContract).ConfigureAwait(false); //send catalog microservice request
+
+            if (!response.IsSuccessStatusCode)
+                return false;
+
+            return true;
         }
 
-        public Task<bool> DeleteAsync(string catalogId)
+        public async Task<bool> DeleteAsync(string catalogId)
         {
-            throw new System.NotImplementedException();
+            var response = await _httpClient.DeleteAsync($"courses/{catalogId}").ConfigureAwait(false); //send catalog microservice request
+
+            if (!response.IsSuccessStatusCode)
+                return false;
+
+            return true;
         }
 
-        public Task<List<CourseView>> GetAllAsync()
+        /// <summary>
+        /// Katalog microservisin GetAll methoduna gönderilen istek
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<CourseView>> GetAllAsync()
         {
-            throw new System.NotImplementedException();
+            //http://GatewayURL/Catalog.Path -> appsettings file
+            var response = await _httpClient.GetAsync("courses").ConfigureAwait(false); //send catalog microservice request
+
+            if (!response.IsSuccessStatusCode)
+                return null;
+
+            var responseData = await response.Content.ReadFromJsonAsync<Response<List<CourseView>>>().ConfigureAwait(false);
+
+            return responseData.Data;
         }
 
-        public Task<List<CourseView>> GetAllByUserIdAsync(string userId)
+        //courses/getAllByUserId/{id}
+        public async Task<List<CourseView>> GetAllByUserIdAsync(string userId)
         {
-            throw new System.NotImplementedException();
+            var response = await _httpClient.GetAsync($"courses/getAllByUserId/{userId}").ConfigureAwait(false); //send catalog microservice request
+
+            if (!response.IsSuccessStatusCode)
+                return null;
+
+            var responseData = await response.Content.ReadFromJsonAsync<Response<List<CourseView>>>().ConfigureAwait(false);
+
+            return responseData.Data;
         }
 
-        public Task<List<CourseView>> GetAllCategoryAsync()
+        /// <summary>
+        ///  Kategori microservisin GetAll methoduna gönderilen istek
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<CategoryView>> GetAllCategoryAsync()
         {
-            throw new System.NotImplementedException();
+            var response = await _httpClient.GetAsync("categories").ConfigureAwait(false); //send category microservice request
+
+            if (!response.IsSuccessStatusCode)
+                return null;
+
+            var responseData = await response.Content.ReadFromJsonAsync<Response<List<CategoryView>>>().ConfigureAwait(false);
+
+            return responseData.Data;
         }
 
-        public Task<CourseView> GetByCatalogIdAsync(string catalogId)
+        //Courses/{id}
+        public async Task<CourseView> GetByIdAsync(string courseId)
         {
-            throw new System.NotImplementedException();
+            var response = await _httpClient.GetAsync($"courses/courses/{courseId}").ConfigureAwait(false); //send catalog microservice request
+
+            if (!response.IsSuccessStatusCode)
+                return null;
+
+            var responseData = await response.Content.ReadFromJsonAsync<Response<CourseView>>().ConfigureAwait(false);
+
+            return responseData.Data;
         }
 
-        public Task<bool> UpdateAsync(CourseUpdateContract courseUpdateContract)
+        public async Task<bool> UpdateAsync(CourseUpdateContract courseUpdateContract)
         {
-            throw new System.NotImplementedException();
+            var response = await _httpClient.PutAsJsonAsync<CourseUpdateContract>("courses", courseUpdateContract).ConfigureAwait(false); //send catalog microservice request
+
+            if (!response.IsSuccessStatusCode)
+                return false;
+
+            return true;
         }
     }
 }

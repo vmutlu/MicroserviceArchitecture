@@ -12,6 +12,6 @@ namespace DotnetMicroserviceArchitecture.CatalogAPI.Services.Abstract
         Task<Response<List<CourseDTO>>> GetAllByUserIdAsync(string userId);
         Task<Response<CourseDTO>> AddAsync(CourseCreateDTO courseCreateDTO);
         Task<Response<NoContent>> UpdateAsync(CourseUpdateDTO courseUpdateDTO);
-        Task<Response<NoContent>> DeleteAsync(CourseDTO courseDTO);
+        Task<Response<NoContent>> DeleteAsync(string courseId);
     }
 }

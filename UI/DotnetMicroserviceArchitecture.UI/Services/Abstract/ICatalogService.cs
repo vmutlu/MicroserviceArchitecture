@@ -7,6 +7,7 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Abstract
     public interface ICatalogService
     {
         Task<List<CourseView>> GetAllAsync();
+        Task<List<CourseView>> GetAllCategoryAsync();
         Task<List<CourseView>> GetAllByUserIdAsync(string userId);
         Task<bool> DeleteAsync(string catalogId);
         Task<bool> AddAsync(CourseCreateContract courseCreateContract);

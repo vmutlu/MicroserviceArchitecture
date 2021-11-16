@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Services\Catalog\DotnetMicroserviceArchitecture.CatalogAPI\DotnetMicroserviceArchitecture.CatalogAPI.csproj" />
     <ProjectReference Include="..\..\Shared\DotnetMicroserviceArchitecture.Core\DotnetMicroserviceArchitecture.Core.csproj" />
   </ItemGroup>
 

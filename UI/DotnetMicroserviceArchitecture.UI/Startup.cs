@@ -22,6 +22,13 @@ namespace DotnetMicroserviceArchitecture.UI
         {
             services.AddHttpClient<IIdentityService, IdentityService>();
 
+            var apiSettings = Configuration.GetSection("ApiSettings").Get<ApiSettings>();
+
+            services.AddHttpClient<ICatalogService, CatalogService>(options =>
+            {
+                options.BaseAddress = new Uri($"{ apiSettings.GatewayURL }/{apiSettings.Catalog.Path}");
+            });
+
             services.AddScoped<ResourceOwnerTokenHandler>();
 
             services.AddHttpContextAccessor();
@@ -29,8 +36,6 @@ namespace DotnetMicroserviceArchitecture.UI
             services.Configure<ClientSettings>(Configuration.GetSection("ClientSettings"));
 
             services.Configure<ApiSettings>(Configuration.GetSection("ApiSettings"));
-
-            var apiSettings = Configuration.GetSection("ApiSettings").Get<ApiSettings>();
 
             services.AddHttpClient<IUserService, UserService>(options =>
             {

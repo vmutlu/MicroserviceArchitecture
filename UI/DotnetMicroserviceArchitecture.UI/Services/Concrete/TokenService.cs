@@ -44,8 +44,8 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
 
             ClientCredentialsTokenRequest clientCredentialsTokenRequest = new()
             {
-                ClientId = _clientSettings.UserClientSettings.ClientId,
-                ClientSecret = _clientSettings.UserClientSettings.ClientSecret,
+                ClientId = _clientSettings.WebClientSettings.ClientId,
+                ClientSecret = _clientSettings.WebClientSettings.ClientSecret,
                 Address = discoveryDocument.TokenEndpoint
             };
 

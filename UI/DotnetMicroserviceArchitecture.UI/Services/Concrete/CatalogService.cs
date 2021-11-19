@@ -19,7 +19,7 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
 
         public async Task<bool> AddAsync(CourseCreateContract courseCreateContract)
         {
-            var response = await _httpClient.PostAsJsonAsync<CourseCreateContract>("courses", courseCreateContract).ConfigureAwait(false); //send catalog microservice request
+            var response = await _httpClient.PostAsJsonAsync<CourseCreateContract>("courses/courses", courseCreateContract).ConfigureAwait(false); //send catalog microservice request
 
             if (!response.IsSuccessStatusCode)
                 return false;
@@ -73,7 +73,7 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
         /// <returns></returns>
         public async Task<List<CategoryView>> GetAllCategoryAsync()
         {
-            var response = await _httpClient.GetAsync("categories").ConfigureAwait(false); //send category microservice request
+            var response = await _httpClient.GetAsync("categories/categories").ConfigureAwait(false); //send category microservice request
 
             if (!response.IsSuccessStatusCode)
                 return null;

@@ -19,7 +19,7 @@ namespace DotnetMicroserviceArchitecture.UI.Controllers
             _identityService = identityService;
         }
 
-        public async Task<IActionResult> GetAllByUserAsync() => View(await _catalogService.GetAllByUserIdAsync(_identityService.GetUserId).ConfigureAwait(false));
+        public async Task<IActionResult> MyCourses() => View(await _catalogService.GetAllByUserIdAsync(_identityService.GetUserId).ConfigureAwait(false));
 
         public async Task<IActionResult> Create()
         {
@@ -42,7 +42,7 @@ namespace DotnetMicroserviceArchitecture.UI.Controllers
 
             await _catalogService.AddAsync(courseView).ConfigureAwait(false);
 
-            return RedirectToAction(nameof(GetAllByUserAsync));
+            return RedirectToAction(nameof(MyCourses));
         }
 
         public async Task<IActionResult> Update(string id)
@@ -51,10 +51,11 @@ namespace DotnetMicroserviceArchitecture.UI.Controllers
             var categories = await _catalogService.GetAllCategoryAsync().ConfigureAwait(false);
 
             if (course == null)
-                RedirectToAction(nameof(GetAllByUserAsync));
+                RedirectToAction(nameof(MyCourses));
 
             ViewBag.categoryList = new SelectList(categories, "Id", "Name", course.Id);
-            CourseUpdateContract courseUpdate = new()
+
+            return View(new CourseUpdateContract()
             {
                 Id = course.Id,
                 Name = course.Name,
@@ -64,9 +65,7 @@ namespace DotnetMicroserviceArchitecture.UI.Controllers
                 CategoryId = course.CategoryId,
                 UserId = course.UserId,
                 Picture = course.Picture
-            };
-
-            return View(courseUpdate);
+            });
         }
 
         [HttpPost]
@@ -75,19 +74,18 @@ namespace DotnetMicroserviceArchitecture.UI.Controllers
             var categories = await _catalogService.GetAllCategoryAsync().ConfigureAwait(false);
             ViewBag.categoryList = new SelectList(categories, "Id", "Name", courseView.Id);
             if (!ModelState.IsValid)
-            {
                 return View();
-            }
+
             await _catalogService.UpdateAsync(courseView).ConfigureAwait(false);
 
-            return RedirectToAction(nameof(GetAllByUserAsync));
+            return RedirectToAction(nameof(MyCourses));
         }
 
         public async Task<IActionResult> Delete(string id)
         {
             await _catalogService.DeleteAsync(id).ConfigureAwait(false);
 
-            return RedirectToAction(nameof(GetAllByUserAsync));
+            return RedirectToAction(nameof(MyCourses));
         }
     }
 }

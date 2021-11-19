@@ -29,6 +29,8 @@ namespace DotnetMicroserviceArchitecture.UI
                 options.BaseAddress = new Uri($"{ apiSettings.GatewayURL }/{apiSettings.Catalog.Path}");
             });
 
+            services.AddHttpClient<ITokenService, TokenService>();
+
             services.AddScoped<ResourceOwnerTokenHandler>();
 
             services.AddHttpContextAccessor();

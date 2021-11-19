@@ -27,11 +27,17 @@ namespace DotnetMicroserviceArchitecture.UI
             services.AddHttpClient<ICatalogService, CatalogService>(options =>
             {
                 options.BaseAddress = new Uri($"{ apiSettings.GatewayURL }/{apiSettings.Catalog.Path}");
-            });
+            }).AddHttpMessageHandler<TokenHandler>();
 
             services.AddHttpClient<ITokenService, TokenService>();
 
+            services.AddAccessTokenManagement();
+
             services.AddScoped<ResourceOwnerTokenHandler>();
+
+            services.AddScoped<TokenHandler>();
+
+            services.AddScoped<DotnetMicroserviceArchitecture.Core.Services.Abstract.IIdentityService, DotnetMicroserviceArchitecture.Core.Services.Concrete.IdentityService>();
 
             services.AddHttpContextAccessor();
 

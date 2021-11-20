@@ -12,7 +12,7 @@ namespace DotnetMicroserviceArchitecture.UI.Models
         public string Picture { get; set; }
         public DateTime CreatedTime { get; set; }
         public string CategoryId { get; set; }
-        public CategoryView CategoryView { get; set; }
-        public FeaturesView FeaturesView { get; set; }
+        public CategoryView Category { get; set; }
+        public FeaturesView Features { get; set; }
     }
 }

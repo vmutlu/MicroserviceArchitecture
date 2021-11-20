@@ -10,7 +10,7 @@ namespace DotnetMicroserviceArchitecture.UI.Models
         public string UserId { get; set; }
         public string Picture { get; set; }
         public string CategoryId { get; set; }
-        public FeaturesView FeaturesView { get; set; }
+        public FeaturesView Features { get; set; }
         public IFormFile PictureFile { get; set; }
     }
 }

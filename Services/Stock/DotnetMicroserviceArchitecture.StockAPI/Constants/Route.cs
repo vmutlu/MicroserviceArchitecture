@@ -5,7 +5,7 @@
         #region PhotosController Routes Contant
 
         public const string HTTPGETORPOST_PHOTOS = "photos";
-        public const string HTTPDELETE_PHOTOS = "{imageUrl}";
+        public const string HTTPDELETE_PHOTOS = "photos/{imageUrl}";
 
         #endregion
     }

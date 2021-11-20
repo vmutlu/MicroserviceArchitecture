@@ -13,5 +13,11 @@ namespace DotnetMicroserviceArchitecture.UI.Helpers
         }
 
         public string GetPhotoURL(string imageUrl) => $"{_apiSettings.ImageURL}/images/{imageUrl}";
+
+        public string GetPhotoRemovePath(string imageUrl)
+        {
+            var splitURL = imageUrl.Split("/");
+            return splitURL[4];
+        }
     }
 }

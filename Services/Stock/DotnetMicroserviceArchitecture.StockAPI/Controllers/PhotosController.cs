@@ -64,7 +64,7 @@ namespace DotnetMicroserviceArchitecture.StockAPI.Controllers
         [HttpDelete, Route(Route.HTTPDELETE_PHOTOS)]
         public IActionResult DeleteImage(string imageUrl)
         {
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", imageUrl);
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/", imageUrl);
             if (!System.IO.File.Exists(path))
                 return Result(Response<NoContent>.Fail("Image not found", HttpStatusCode.NotFound.GetHashCode()));
 

@@ -1,4 +1,5 @@
 using DotnetMicroserviceArchitecture.UI.Handler;
+using DotnetMicroserviceArchitecture.UI.Helpers;
 using DotnetMicroserviceArchitecture.UI.Services.Abstract;
 using DotnetMicroserviceArchitecture.UI.Services.Concrete;
 using DotnetMicroserviceArchitecture.UI.Settings;
@@ -37,6 +38,8 @@ namespace DotnetMicroserviceArchitecture.UI
             }).AddHttpMessageHandler<TokenHandler>();
 
             services.AddHttpClient<ITokenService, TokenService>();
+
+            services.AddSingleton<PhotoURLEditHelper>();
 
             services.AddAccessTokenManagement();
 

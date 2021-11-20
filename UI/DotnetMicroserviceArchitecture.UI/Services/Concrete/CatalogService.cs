@@ -1,4 +1,5 @@
 ﻿using DotnetMicroserviceArchitecture.Core.Dtos;
+using DotnetMicroserviceArchitecture.UI.Helpers;
 using DotnetMicroserviceArchitecture.UI.Models;
 using DotnetMicroserviceArchitecture.UI.Services.Abstract;
 using System;
@@ -13,11 +14,13 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
     {
         private readonly HttpClient _httpClient;
         private readonly IStockService _stockService;
+        private readonly PhotoURLEditHelper _photoURLEditHelper;
 
-        public CatalogService(HttpClient httpClient, IStockService stockService)
+        public CatalogService(HttpClient httpClient, IStockService stockService, PhotoURLEditHelper photoURLEditHelper)
         {
             _httpClient = httpClient;
             _stockService = stockService;
+            _photoURLEditHelper = photoURLEditHelper;
         }
 
         public async Task<bool> AddAsync(CourseCreateContract courseCreateContract)
@@ -25,7 +28,7 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
             var imageRequest = await _stockService.UploadImageAsync(courseCreateContract.PictureFile).ConfigureAwait(false);
 
             if (imageRequest is not null)
-                courseCreateContract.Picture = imageRequest.URL;
+                courseCreateContract.Picture = _photoURLEditHelper.GetPhotoURL(imageRequest.URL);
 
             else
                 courseCreateContract.Picture = $"{DateTime.Now.Date}_{DateTime.Now.ToShortTimeString()} unsaved picture. response: {imageRequest}";

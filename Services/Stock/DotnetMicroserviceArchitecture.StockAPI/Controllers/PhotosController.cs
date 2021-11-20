@@ -3,6 +3,7 @@ using DotnetMicroserviceArchitecture.Core.Dtos;
 using DotnetMicroserviceArchitecture.StockAPI.Constants;
 using DotnetMicroserviceArchitecture.StockAPI.DTOs;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
@@ -17,17 +18,37 @@ namespace DotnetMicroserviceArchitecture.StockAPI.Controllers
     [ApiController]
     public class PhotosController : BaseController
     {
-        [HttpPost,Route(Route.HTTPGETORPOST_PHOTOS)]
-        public async Task<IActionResult> AddImage(IFormFile image, CancellationToken cancellationToken)
+        private readonly IWebHostEnvironment _env;
+        private readonly string _wwwroot;
+        private readonly string _imgFolder = "images";
+
+        public PhotosController(IWebHostEnvironment env)
         {
-            if (image != null && image.Length > decimal.Zero)
+            _env = env;
+            _wwwroot = _env.WebRootPath;
+        }
+
+        [HttpPost,Route(Route.HTTPGETORPOST_PHOTOS)]
+        public async Task<IActionResult> AddImage(IFormFile images, CancellationToken cancellationToken)
+        {
+            if (images != null && images.Length > decimal.Zero)
             {
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", image.FileName);
+                if (!Directory.Exists($"{_wwwroot}\\{_imgFolder}"))
+                    Directory.CreateDirectory($"{_wwwroot}\\{_imgFolder}");
 
-                using var stream = new FileStream(path, FileMode.Create);
-                await image.CopyToAsync(stream, cancellationToken);
+                var path = Path.Combine($"{_wwwroot}\\{_imgFolder}\\", images.FileName);
 
-                var returnPath = image.FileName;
+               // Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images", images.FileName);
+
+                /// using var stream = new FileStream(path, FileMode.Create);
+                await using (FileStream stream = new FileStream(path, FileMode.Create))
+                {
+                    await images.CopyToAsync(stream);
+                }
+
+                //await images.CopyToAsync(stream, cancellationToken);
+
+                var returnPath = images.FileName;
 
                 var imageDTO = new ImageDTO()
                 {

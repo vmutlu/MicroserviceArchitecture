@@ -1,4 +1,5 @@
-﻿using DotnetMicroserviceArchitecture.UI.Models;
+﻿using DotnetMicroserviceArchitecture.Core.Dtos;
+using DotnetMicroserviceArchitecture.UI.Models;
 using DotnetMicroserviceArchitecture.UI.Services.Abstract;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -33,7 +34,7 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
             if (formFile is null || formFile.Length <= decimal.Zero)
                 return null;
 
-            var newFileName = $"{DateTime.Now.Date}_{DateTime.Now.ToShortTimeString()}_{Guid.NewGuid().ToString()}{Path.GetExtension(formFile.FileName)}";
+            var newFileName = $"{Guid.NewGuid().ToString()}{Path.GetExtension(formFile.FileName)}";
 
             using var memoryStream = new MemoryStream();
 
@@ -47,9 +48,9 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
             if (!response.IsSuccessStatusCode)
                 return null;
 
-            var responseMap = await response.Content.ReadFromJsonAsync<StockView>().ConfigureAwait(false);
+            var responseMap = await response.Content.ReadFromJsonAsync<Response<StockView>>().ConfigureAwait(false);
 
-            return responseMap;
+            return responseMap.Data;
         }
     }
 }

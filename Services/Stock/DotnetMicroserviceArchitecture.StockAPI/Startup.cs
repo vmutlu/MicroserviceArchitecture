@@ -32,6 +32,8 @@ namespace DotnetMicroserviceArchitecture.StockAPI
                 opt.Filters.Add(new AuthorizeFilter()); //controller üzerine Authorize attributune gerek yok
             });
 
+            services.AddHttpContextAccessor();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DotnetMicroserviceArchitecture.StockAPI", Version = "v1" });

@@ -10,11 +10,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\images\" />
+    <ProjectReference Include="..\..\..\Shared\DotnetMicroserviceArchitecture.Core\DotnetMicroserviceArchitecture.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Shared\DotnetMicroserviceArchitecture.Core\DotnetMicroserviceArchitecture.Core.csproj" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>

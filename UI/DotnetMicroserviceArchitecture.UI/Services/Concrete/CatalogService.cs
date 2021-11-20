@@ -1,6 +1,7 @@
 ﻿using DotnetMicroserviceArchitecture.Core.Dtos;
 using DotnetMicroserviceArchitecture.UI.Models;
 using DotnetMicroserviceArchitecture.UI.Services.Abstract;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -11,14 +12,24 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
     public class CatalogService : ICatalogService
     {
         private readonly HttpClient _httpClient;
+        private readonly IStockService _stockService;
 
-        public CatalogService(HttpClient httpClient)
+        public CatalogService(HttpClient httpClient, IStockService stockService)
         {
             _httpClient = httpClient;
+            _stockService = stockService;
         }
 
         public async Task<bool> AddAsync(CourseCreateContract courseCreateContract)
         {
+            var imageRequest = await _stockService.UploadImageAsync(courseCreateContract.PictureFile).ConfigureAwait(false);
+
+            if (imageRequest is not null)
+                courseCreateContract.Picture = imageRequest.URL;
+
+            else
+                courseCreateContract.Picture = $"{DateTime.Now.Date}_{DateTime.Now.ToShortTimeString()} unsaved picture. response: {imageRequest}";
+
             var response = await _httpClient.PostAsJsonAsync<CourseCreateContract>("courses/courses", courseCreateContract).ConfigureAwait(false); //send catalog microservice request
 
             if (!response.IsSuccessStatusCode)

@@ -31,8 +31,8 @@
                                     <td><img style="width:72px;" src="@item.Picture" class="img-thumbnail" /></td>
                                     <td>@item.Name</td>
                                     <td>@item.Price</td>
-                                    <td>@item.FeaturesView?.Duration</td>
-                                    <td>@item.CategoryView?.Name</td>
+                                    <td>@item.Features?.Duration</td>
+                                    <td>@item.Category?.Name</td>
                                     <td>
                                         <a asp-controller="Courses" asp-action="Update" asp-route-id="@item.Id" class="btn btn-success btn-sm">Güncelle</a>
 

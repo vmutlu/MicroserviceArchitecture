@@ -1,4 +1,5 @@
-﻿using DotnetMicroserviceArchitecture.BasketAPI.DTOs;
+﻿using DotnetMicroserviceArchitecture.BasketAPI.Constants;
+using DotnetMicroserviceArchitecture.BasketAPI.DTOs;
 using DotnetMicroserviceArchitecture.BasketAPI.Services.Abstract;
 using DotnetMicroserviceArchitecture.Core.CustomControllerBase;
 using DotnetMicroserviceArchitecture.Core.Services.Abstract;
@@ -20,7 +21,7 @@ namespace DotnetMicroserviceArchitecture.BasketAPI.Controllers
             _basketService = basketService;
         }
 
-        [HttpGet]
+        [HttpGet,Route(Route.HTTPGETORPOST_BASKETS)]
         public async Task<IActionResult> GetBasket()
         {
             var userId = _identityService.GetUserId;
@@ -28,15 +29,16 @@ namespace DotnetMicroserviceArchitecture.BasketAPI.Controllers
             return Result(await _basketService.GetBasket(userId).ConfigureAwait(false));
         }
 
-        [HttpPost]
+        [HttpPost, Route(Route.HTTPGETORPOST_BASKETS)]
         public async Task<IActionResult> AddOrUpdateBasket(BasketDTO basketDTO)
         {
+            basketDTO.UserId = _identityService.GetUserId;
             var response = await _basketService.AddOrUpdate(basketDTO).ConfigureAwait(false);
 
             return Result(response);
         }
 
-        [HttpDelete]
+        [HttpDelete, Route(Route.HTTPGETORPOST_BASKETS)]
         public async Task<IActionResult> DeleteBasket()
         {
             var userId = _identityService.GetUserId;

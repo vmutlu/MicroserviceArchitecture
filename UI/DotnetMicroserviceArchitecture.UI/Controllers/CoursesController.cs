@@ -61,7 +61,7 @@ namespace DotnetMicroserviceArchitecture.UI.Controllers
                 Name = course.Name,
                 Description = course.Description,
                 Price = course.Price,
-                FeaturesView = course.FeaturesView,
+                Features = course.Features,
                 CategoryId = course.CategoryId,
                 UserId = course.UserId,
                 Picture = course.Picture

@@ -24,9 +24,16 @@ namespace DotnetMicroserviceArchitecture.UI
 
             var apiSettings = Configuration.GetSection("ApiSettings").Get<ApiSettings>();
 
+            //category service implementation
             services.AddHttpClient<ICatalogService, CatalogService>(options =>
             {
                 options.BaseAddress = new Uri($"{ apiSettings.GatewayURL }/{apiSettings.Catalog.Path}");
+            }).AddHttpMessageHandler<TokenHandler>();
+
+            //stock service implementation
+            services.AddHttpClient<IStockService, StockService>(options =>
+            {
+                options.BaseAddress = new Uri($"{ apiSettings.GatewayURL }/{apiSettings.Stock.Path}");
             }).AddHttpMessageHandler<TokenHandler>();
 
             services.AddHttpClient<ITokenService, TokenService>();

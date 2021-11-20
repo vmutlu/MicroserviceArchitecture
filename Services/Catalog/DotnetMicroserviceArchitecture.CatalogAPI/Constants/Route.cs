@@ -13,6 +13,7 @@
 
         public const string HTTPGET_COURSES = "Courses";
         public const string HTTPGET_COURSESBYID = "Courses/{id}";
+        public const string HTTPDELETE_COURSESBYID = "Courses/{courseId}";
         public const string HTTPGET_COURSESBYUSERID = "GetAllByUserId/{userId}";
 
         #endregion

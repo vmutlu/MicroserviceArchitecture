@@ -1,5 +1,6 @@
 ﻿using DotnetMicroserviceArchitecture.Core.CustomControllerBase;
 using DotnetMicroserviceArchitecture.Core.Dtos;
+using DotnetMicroserviceArchitecture.StockAPI.Constants;
 using DotnetMicroserviceArchitecture.StockAPI.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -16,7 +17,7 @@ namespace DotnetMicroserviceArchitecture.StockAPI.Controllers
     [ApiController]
     public class PhotosController : BaseController
     {
-        [HttpPost]
+        [HttpPost,Route(Route.HTTPGETORPOST_PHOTOS)]
         public async Task<IActionResult> AddImage(IFormFile image, CancellationToken cancellationToken)
         {
             if (image != null && image.Length > decimal.Zero)
@@ -26,7 +27,7 @@ namespace DotnetMicroserviceArchitecture.StockAPI.Controllers
                 using var stream = new FileStream(path, FileMode.Create);
                 await image.CopyToAsync(stream, cancellationToken);
 
-                var returnPath = "images/" + image.FileName;
+                var returnPath = image.FileName;
 
                 var imageDTO = new ImageDTO()
                 {
@@ -39,7 +40,7 @@ namespace DotnetMicroserviceArchitecture.StockAPI.Controllers
             return Result(Response<ImageDTO>.Fail("Image is empty", HttpStatusCode.NotFound.GetHashCode()));
         }
 
-        [HttpDelete("{imageUrl}")]
+        [HttpDelete, Route(Route.HTTPDELETE_PHOTOS)]
         public IActionResult DeleteImage(string imageUrl)
         {
             var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", imageUrl);

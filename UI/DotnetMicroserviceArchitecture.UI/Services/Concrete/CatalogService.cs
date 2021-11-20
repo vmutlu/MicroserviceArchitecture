@@ -29,7 +29,7 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
 
         public async Task<bool> DeleteAsync(string catalogId)
         {
-            var response = await _httpClient.DeleteAsync($"courses/{catalogId}").ConfigureAwait(false); //send catalog microservice request
+            var response = await _httpClient.DeleteAsync($"courses/courses/{catalogId}").ConfigureAwait(false); //send catalog microservice request
 
             if (!response.IsSuccessStatusCode)
                 return false;
@@ -98,7 +98,7 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
 
         public async Task<bool> UpdateAsync(CourseUpdateContract courseUpdateContract)
         {
-            var response = await _httpClient.PutAsJsonAsync<CourseUpdateContract>("courses", courseUpdateContract).ConfigureAwait(false); //send catalog microservice request
+            var response = await _httpClient.PutAsJsonAsync<CourseUpdateContract>("courses/courses", courseUpdateContract).ConfigureAwait(false); //send catalog microservice request
 
             if (!response.IsSuccessStatusCode)
                 return false;

@@ -12,7 +12,7 @@ namespace DotnetMicroserviceArchitecture.CatalogAPI.Dtos
         public string Picture { get; set; }
         public DateTime CreatedTime { get; set; }
         public string CategoryId { get; set; }
-        public CategoryDTO CategoryDTO { get; set; }
-        public FeatureDTO FeatureDTO { get; set; }
+        public CategoryDTO Category { get; set; }
+        public FeatureDTO Feature { get; set; }
     }
 }

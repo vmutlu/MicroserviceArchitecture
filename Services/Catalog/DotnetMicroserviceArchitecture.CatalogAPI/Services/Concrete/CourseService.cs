@@ -65,10 +65,8 @@ namespace DotnetMicroserviceArchitecture.CatalogAPI.Services.Concrete
                 userCourses = new List<Course>();
 
             else
-                userCourses.Select(async category =>
-                {
-                    category.Category = await _categoryCollection.Find<Category>(course => course.Id == category.Id).FirstOrDefaultAsync();
-                });
+                foreach (var course in userCourses)
+                    course.Category = await _categoryCollection.Find<Category>(category => category.Id == course.CategoryId).FirstOrDefaultAsync();
 
             return Response<List<CourseDTO>>.Success(_mapper.Map<List<CourseDTO>>(userCourses), (int)HttpStatusCode.OK);
         }

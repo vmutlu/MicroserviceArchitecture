@@ -7,5 +7,6 @@
         public string ImageURL { get; set; }
         public ServiceAPI Catalog { get; set; }
         public ServiceAPI Stock { get; set; }
+        public ServiceAPI Basket { get; set; }
     }
 }

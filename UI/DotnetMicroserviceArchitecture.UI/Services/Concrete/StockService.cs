@@ -20,11 +20,8 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
         }
 
         public async Task<bool> DeleteAsync(string imageURL)
-        {
-            if (imageURL is null)
-                return false;
-
-            var response = await _httpClient.DeleteAsync($"photos/{imageURL}").ConfigureAwait(false);
+        {     
+            var response = await _httpClient.DeleteAsync($"photos/photos/{imageURL}").ConfigureAwait(false);
 
             return response.IsSuccessStatusCode;
         }

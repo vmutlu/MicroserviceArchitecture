@@ -58,12 +58,16 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
         public async Task<List<CourseView>> GetAllAsync()
         {
             //http://GatewayURL/Catalog.Path -> appsettings file
-            var response = await _httpClient.GetAsync("courses").ConfigureAwait(false); //send catalog microservice request
+            var response = await _httpClient.GetAsync("courses/courses").ConfigureAwait(false); //send catalog microservice request
 
             if (!response.IsSuccessStatusCode)
                 return null;
 
             var responseData = await response.Content.ReadFromJsonAsync<Response<List<CourseView>>>().ConfigureAwait(false);
+            responseData.Data.ForEach(image =>
+            {
+                image.Picture = image.Picture;
+            });
 
             return responseData.Data;
         }
@@ -77,6 +81,11 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
                 return null;
 
             var responseData = await response.Content.ReadFromJsonAsync<Response<List<CourseView>>>().ConfigureAwait(false);
+
+            responseData.Data.ForEach(image =>
+            {
+                image.Picture = image.Picture;
+            });
 
             return responseData.Data;
         }
@@ -112,6 +121,23 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
 
         public async Task<bool> UpdateAsync(CourseUpdateContract courseUpdateContract)
         {
+            var imageRequest = await _stockService.UploadImageAsync(courseUpdateContract.PictureFile).ConfigureAwait(false);
+
+            if (imageRequest is not null)
+            {
+                var course = await GetByIdAsync(courseUpdateContract.Id).ConfigureAwait(false);
+
+                if (course.Picture != courseUpdateContract.Picture)
+                {
+                    await _stockService.DeleteAsync(_photoURLEditHelper.GetPhotoRemovePath(course.Picture)).ConfigureAwait(false);
+
+                    courseUpdateContract.Picture = _photoURLEditHelper.GetPhotoURL(imageRequest.URL);
+                }
+            }
+
+            else
+                courseUpdateContract.Picture = $"{DateTime.Now.Date}_{DateTime.Now.ToShortTimeString()} unsaved picture. response: {imageRequest}";
+
             var response = await _httpClient.PutAsJsonAsync<CourseUpdateContract>("courses/courses", courseUpdateContract).ConfigureAwait(false); //send catalog microservice request
 
             if (!response.IsSuccessStatusCode)

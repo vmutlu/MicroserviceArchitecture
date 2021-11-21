@@ -8,5 +8,6 @@
         public ServiceAPI Catalog { get; set; }
         public ServiceAPI Stock { get; set; }
         public ServiceAPI Basket { get; set; }
+        public ServiceAPI Discount { get; set; }
     }
 }

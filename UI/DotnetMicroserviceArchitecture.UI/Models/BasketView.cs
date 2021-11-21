@@ -15,7 +15,7 @@ namespace DotnetMicroserviceArchitecture.UI.Models
         public int? DiscountRate { get; set; }
         private List<BasketItemView> basketItems { get; set; }
         public decimal TotalPrice { get => basketItems.Sum(x => x.GetCurrentPrice * x.Quantity); }
-        public bool HasDiscount { get => !string.IsNullOrWhiteSpace(DiscountCode); }
+        public bool HasDiscount { get => !string.IsNullOrWhiteSpace(DiscountCode) && DiscountRate.HasValue; }
 
         public List<BasketItemView> BasketItems
         {

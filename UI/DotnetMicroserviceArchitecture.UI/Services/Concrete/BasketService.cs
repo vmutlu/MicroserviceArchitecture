@@ -10,11 +10,13 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
 {
     public class BasketService : IBasketService
     {
+        private readonly IDiscountService _discountService;
         private readonly HttpClient _httpClient;
 
-        public BasketService(HttpClient httpClient)
+        public BasketService(HttpClient httpClient, IDiscountService discountService)
         {
             _httpClient = httpClient;
+            _discountService = discountService;
         }
         public async Task AddBasketItemAsync(BasketItemView basketItemView)
         {
@@ -45,17 +47,14 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
             await CancelApplyDiscountAsync().ConfigureAwait(false);
 
             var basket = await GetAsync().ConfigureAwait(false);
-            if (basket == null)
+            if (basket is null)
                 return false;
 
-            //var hasDiscount = null;
-            //await _discountService.GetDiscount(discountCode);
-            //if (hasDiscount == null)
-            //{
-            //    return false;
-            //}
+            var hasDiscount = await _discountService.GetDiscountAsync(discountCode).ConfigureAwait(false);
+            if (hasDiscount is null)
+                return false;
 
-            //basket.ApplyDiscount(hasDiscount.Code, hasDiscount.Rate);
+            basket.ApplyDiscount(hasDiscount.Code, hasDiscount.Rate);
             await AddOrUpdateAsync(basket).ConfigureAwait(false);
             return true;
         }

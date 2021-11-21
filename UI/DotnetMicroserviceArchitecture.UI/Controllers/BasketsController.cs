@@ -41,7 +41,7 @@ namespace DotnetMicroserviceArchitecture.UI.Controllers
 
         public async Task<IActionResult> ApplyDiscount(DiscountApplyView discountApplyView)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 TempData["discountError"] = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).FirstOrDefault();
                 return RedirectToAction(nameof(Index));

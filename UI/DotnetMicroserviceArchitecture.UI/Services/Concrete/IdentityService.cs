@@ -51,8 +51,8 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
 
             RefreshTokenRequest refreshTokenRequest = new()
             {
-                ClientId = _clientSettings.WebClientSettings.ClientId,
-                ClientSecret = _clientSettings.WebClientSettings.ClientSecret,
+                ClientId = _clientSettings.UserClientSettings.ClientId,
+                ClientSecret = _clientSettings.UserClientSettings.ClientSecret,
                 RefreshToken = refreshToken,
                 Address = discoveryDocument.TokenEndpoint
             };

@@ -42,12 +42,34 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
 
         public async Task<bool> ApplyDiscountAsync(string discountCode)
         {
-            throw new System.NotImplementedException();
+            await CancelApplyDiscountAsync().ConfigureAwait(false);
+
+            var basket = await GetAsync().ConfigureAwait(false);
+            if (basket == null)
+                return false;
+
+            //var hasDiscount = null;
+            //await _discountService.GetDiscount(discountCode);
+            //if (hasDiscount == null)
+            //{
+            //    return false;
+            //}
+
+            //basket.ApplyDiscount(hasDiscount.Code, hasDiscount.Rate);
+            await AddOrUpdateAsync(basket).ConfigureAwait(false);
+            return true;
         }
 
         public async Task<bool> CancelApplyDiscountAsync()
         {
-            throw new System.NotImplementedException();
+            var basket = await GetAsync().ConfigureAwait(false);
+
+            if (basket is null || basket.DiscountCode is null)
+                return false;
+
+            basket.CancelDiscount();
+            await AddOrUpdateAsync(basket).ConfigureAwait(false);
+            return true;
         }
 
         public async Task<bool> DeleteAsync()

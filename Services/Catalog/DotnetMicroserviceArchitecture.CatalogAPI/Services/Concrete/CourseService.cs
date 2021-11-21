@@ -34,10 +34,8 @@ namespace DotnetMicroserviceArchitecture.CatalogAPI.Services.Concrete
             var courses = await _courseCollection.Find(course => true).ToListAsync().ConfigureAwait(false);
 
             if (courses.Any())
-                courses.Select(async category =>
-                {
-                    category.Category = await _categoryCollection.Find<Category>(course => course.Id == category.Id).FirstOrDefaultAsync();
-                });
+                foreach (var course in courses)
+                    course.Category = await _categoryCollection.Find<Category>(category => category.Id == course.CategoryId).FirstOrDefaultAsync();
 
             else
                 courses = new List<Course>();
@@ -52,7 +50,7 @@ namespace DotnetMicroserviceArchitecture.CatalogAPI.Services.Concrete
             if (course is null)
                 return Response<CourseDTO>.Fail("Course Not Found", (int)HttpStatusCode.NotFound);
 
-            course.Category = await _categoryCollection.Find<Category>(c => c.Id == course.Id).FirstOrDefaultAsync();
+            course.Category = await _categoryCollection.Find<Category>(category => category.Id == course.CategoryId).FirstOrDefaultAsync();
 
             return Response<CourseDTO>.Success(_mapper.Map<CourseDTO>(course), (int)HttpStatusCode.OK);
         }

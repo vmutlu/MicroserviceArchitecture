@@ -4,6 +4,8 @@ using DotnetMicroserviceArchitecture.UI.Helpers;
 using DotnetMicroserviceArchitecture.UI.Services.Abstract;
 using DotnetMicroserviceArchitecture.UI.Services.Concrete;
 using DotnetMicroserviceArchitecture.UI.Settings;
+using DotnetMicroserviceArchitecture.UI.Validators;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,7 +26,8 @@ namespace DotnetMicroserviceArchitecture.UI
         {
             services.AddServices(Configuration);
 
-            services.AddControllersWithViews();
+            //RegisterValidatorsFromAssemblyContaining validator classlarýný tarar ve validate classlarýný çalýþtýrýr
+            services.AddControllersWithViews().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CourseCreateRequestValidator>());
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

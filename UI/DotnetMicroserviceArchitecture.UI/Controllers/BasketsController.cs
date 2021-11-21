@@ -1,10 +1,12 @@
 ﻿using DotnetMicroserviceArchitecture.UI.Models;
 using DotnetMicroserviceArchitecture.UI.Services.Abstract;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace DotnetMicroserviceArchitecture.UI.Controllers
 {
+    [Authorize]
     public class BasketsController : Controller
     {
         private readonly ICatalogService _catalogService;

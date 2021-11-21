@@ -6,6 +6,10 @@ namespace DotnetMicroserviceArchitecture.UI.Models
 {
     public class BasketView
     {
+        public BasketView()
+        {
+            basketItems = new List<BasketItemView>();
+        }
         public string UserId { get; set; }
         public string DiscountCode { get; set; }
         public int? DiscountRate { get; set; }
@@ -21,7 +25,7 @@ namespace DotnetMicroserviceArchitecture.UI.Models
                 {
                     basketItems.ForEach(x =>
                     {
-                        var discountPrice = x.Price * ((decimal)DiscountRate.Value / 100);
+                        var discountPrice =x.Price * ((decimal)DiscountRate.Value / 100);
                         x.AppliedDiscount(Math.Round(x.Price - discountPrice, 2));
                     });
                 }
@@ -29,6 +33,18 @@ namespace DotnetMicroserviceArchitecture.UI.Models
                 return basketItems;
             }
             set { basketItems = value; }
+        }
+
+        public void CancelDiscount()
+        {
+            DiscountCode = null;
+            DiscountRate = null;
+        }
+
+        public void ApplyDiscount(string code, int rate)
+        {
+            DiscountCode = code;
+            DiscountRate = rate;
         }
     }
 }

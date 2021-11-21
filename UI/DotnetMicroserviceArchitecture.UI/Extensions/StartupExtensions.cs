@@ -37,6 +37,12 @@ namespace DotnetMicroserviceArchitecture.UI.Extensions
                 options.BaseAddress = new Uri($"{ apiSettings.GatewayURL }/{apiSettings.Basket.Path}");
             }).AddHttpMessageHandler<ResourceOwnerTokenHandler>();
 
+            //discount service implementation
+            services.AddHttpClient<IDiscountService, DiscountService>(options =>
+            {
+                options.BaseAddress = new Uri($"{ apiSettings.GatewayURL }/{apiSettings.Discount.Path}");
+            }).AddHttpMessageHandler<ResourceOwnerTokenHandler>();
+
             services.AddHttpClient<ITokenService, TokenService>();
 
             services.AddSingleton<PhotoURLEditHelper>();

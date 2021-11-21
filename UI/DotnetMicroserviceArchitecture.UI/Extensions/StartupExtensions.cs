@@ -35,7 +35,7 @@ namespace DotnetMicroserviceArchitecture.UI.Extensions
             services.AddHttpClient<IBasketService, BasketService>(options =>
             {
                 options.BaseAddress = new Uri($"{ apiSettings.GatewayURL }/{apiSettings.Basket.Path}");
-            }).AddHttpMessageHandler<TokenHandler>();
+            }).AddHttpMessageHandler<ResourceOwnerTokenHandler>();
 
             services.AddHttpClient<ITokenService, TokenService>();
 

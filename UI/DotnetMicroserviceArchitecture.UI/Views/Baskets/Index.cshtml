@@ -31,7 +31,7 @@
                                     @item.GetCurrentPrice TL @(Model.HasDiscount ? $"(%{Model.DiscountRate.Value} uygulandı)" : "")
                                 </td>
                                 <td>
-                                    <a class="btn btn-danger" asp-controller="Basket" asp-action="DeleteBasketItem" asp-route-courseId="@item.CourseId">sil</a>
+                                    <a class="btn btn-danger" asp-controller="Baskets" asp-action="DeleteBasketItem" asp-route-courseId="@item.CourseId">sil</a>
                                 </td>
                             </tr>
                         }
@@ -52,22 +52,22 @@
                         </tr>
                     </table>
 
-                    <form asp-controller="Basket" asp-action="ApplyDiscount">
+                    <form asp-controller="Baskets" asp-action="ApplyDiscount">
                         @if (Model.HasDiscount)
                         {
                             <div class="alert alert-success">
                                 "@Model.DiscountCode"indirim kodu uygulandı
-                                <a asp-controller="Basket" asp-action="CancelApplyDiscount"> (iptal et)</a>
+                                <a asp-controller="Baskets" asp-action="CancelApplyDiscount"> (iptal et)</a>
                             </div>
 
                         }
 
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" name="DiscountApplyInput.Code">
+                            <input type="text" class="form-control" name="DiscountApplyView.Code">
                             <button class="btn btn-outline-secondary" type="submit">Uygula</button>
                         </div>
 
-                        @if (TempData["discountStatus"] != null && (bool)TempData["discountStatus"] == false)
+                        @if (TempData["discountStatu"] != null && (bool)TempData["discountStatu"] == false)
                         {
                             <div class="text-danger">indirim kodu geçersiz</div>
                         }

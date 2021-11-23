@@ -9,5 +9,6 @@
         public ServiceAPI Stock { get; set; }
         public ServiceAPI Basket { get; set; }
         public ServiceAPI Discount { get; set; }
+        public ServiceAPI Payment { get; set; }
     }
 }

@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "SuccessfulCheckout Page";
+}
+
+<div class="alert alert-info">
+
+    <p>Sipariş/Ödeme Başarıyla Tamamlandı</p>
+    <p>Sipariş/Ödeme Numarası : @ViewBag.orderId</p>
+</div>
+
+<a class="btn btn-primary" asp-controller="Home" asp-action="Index">Anasayfa'ya Dön</a>

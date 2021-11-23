@@ -35,12 +35,18 @@ namespace DotnetMicroserviceArchitecture.UI.Extensions
             services.AddHttpClient<IBasketService, BasketService>(options =>
             {
                 options.BaseAddress = new Uri($"{ apiSettings.GatewayURL }/{apiSettings.Basket.Path}");
-            }).AddHttpMessageHandler<ResourceOwnerTokenHandler>();
+            }).AddHttpMessageHandler<ResourceOwnerTokenHandler>(); 
 
             //discount service implementation
             services.AddHttpClient<IDiscountService, DiscountService>(options =>
             {
                 options.BaseAddress = new Uri($"{ apiSettings.GatewayURL }/{apiSettings.Discount.Path}");
+            }).AddHttpMessageHandler<ResourceOwnerTokenHandler>();
+
+            //payment service implementation
+            services.AddHttpClient<IPaymentService, PaymentService>(options =>
+            {
+                options.BaseAddress = new Uri($"{ apiSettings.GatewayURL }/{apiSettings.Payment.Path}");
             }).AddHttpMessageHandler<ResourceOwnerTokenHandler>();
 
             services.AddHttpClient<ITokenService, TokenService>();

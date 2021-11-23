@@ -49,6 +49,12 @@ namespace DotnetMicroserviceArchitecture.UI.Extensions
                 options.BaseAddress = new Uri($"{ apiSettings.GatewayURL }/{apiSettings.Payment.Path}");
             }).AddHttpMessageHandler<ResourceOwnerTokenHandler>();
 
+            //order service implementation
+            services.AddHttpClient<IOrderService, OrderService>(options =>
+            {
+                options.BaseAddress = new Uri($"{ apiSettings.GatewayURL }/{apiSettings.Order.Path}");
+            }).AddHttpMessageHandler<ResourceOwnerTokenHandler>();
+
             services.AddHttpClient<ITokenService, TokenService>();
 
             services.AddSingleton<PhotoURLEditHelper>();

@@ -1,5 +1,6 @@
 ﻿using DotnetMicroserviceArchitecture.Core.CustomControllerBase;
 using DotnetMicroserviceArchitecture.Core.Dtos;
+using DotnetMicroserviceArchitecture.PaymentAPI.Constants;
 using DotnetMicroserviceArchitecture.PaymentAPI.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -11,7 +12,7 @@ namespace DotnetMicroserviceArchitecture.PaymentAPI.Controllers
     public class PaymentsController : BaseController
     {
         //ödeme işlemi için gerekli entegrasyon yapılması gerek. Iyzıco kullanımlarına bak önerilen daha iyi ödeme sistemleri varsa onları entegre et.
-        [HttpPost]
+        [HttpPost,Route(Route.HTTPGETORPOST_PAYMENTS)]
         public IActionResult ReceivePayment(PaymentDTO paymentDTO) => Result<NoContent>(Response<NoContent>.Success(HttpStatusCode.OK.GetHashCode()));
     }
 }

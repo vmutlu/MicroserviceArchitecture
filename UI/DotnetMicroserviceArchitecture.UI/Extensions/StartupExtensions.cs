@@ -1,5 +1,4 @@
-﻿using DotnetMicroserviceArchitecture.Core.Services.Concrete;
-using DotnetMicroserviceArchitecture.UI.Handler;
+﻿using DotnetMicroserviceArchitecture.UI.Handler;
 using DotnetMicroserviceArchitecture.UI.Helpers;
 using DotnetMicroserviceArchitecture.UI.Services.Abstract;
 using DotnetMicroserviceArchitecture.UI.Services.Concrete;
@@ -35,7 +34,7 @@ namespace DotnetMicroserviceArchitecture.UI.Extensions
             services.AddHttpClient<IBasketService, BasketService>(options =>
             {
                 options.BaseAddress = new Uri($"{ apiSettings.GatewayURL }/{apiSettings.Basket.Path}");
-            }).AddHttpMessageHandler<ResourceOwnerTokenHandler>(); 
+            }).AddHttpMessageHandler<ResourceOwnerTokenHandler>();
 
             //discount service implementation
             services.AddHttpClient<IDiscountService, DiscountService>(options =>

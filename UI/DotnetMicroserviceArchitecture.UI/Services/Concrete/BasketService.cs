@@ -23,14 +23,16 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
             var exitsBasket = await GetAsync().ConfigureAwait(false);
 
             if (exitsBasket is not null)
+            {
                 if (!exitsBasket.BasketItems.Any(x => x.CourseId == basketItemView.CourseId))
                     exitsBasket.BasketItems.Add(basketItemView);
+            }
 
-                else
-                {
-                    exitsBasket = new BasketView();
-                    exitsBasket.BasketItems.Add(basketItemView);
-                }
+            else
+            {
+                exitsBasket = new BasketView();
+                exitsBasket.BasketItems.Add(basketItemView);
+            }
 
             await AddOrUpdateAsync(exitsBasket).ConfigureAwait(false);
         }

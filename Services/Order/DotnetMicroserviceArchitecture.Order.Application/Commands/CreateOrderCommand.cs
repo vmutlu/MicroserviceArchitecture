@@ -9,6 +9,6 @@ namespace DotnetMicroserviceArchitecture.Order.Application.Commands
     {
         public string BuyerId { get; set; }
         public List<OrderItemDTO> OrderItems { get; set; }
-        public AdressDTO AdressDTO { get; set; }
+        public AdressDTO Adress { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace DotnetMicroserviceArchitecture.Order.Application.Handlers
         }
         public async Task<Response<InsertedOrderDTO>> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
-            Adress address = new(request?.AdressDTO?.City, request?.AdressDTO?.Town, request?.AdressDTO?.Street, request?.AdressDTO?.ZipCode, request?.AdressDTO?.Line);
+            Adress address = new(request?.Adress?.City, request?.Adress?.Town, request?.Adress?.Street, request?.Adress?.ZipCode, request?.Adress?.Line);
 
             DotnetMicroserviceArchitecture.Order.Domain.Aggregate.Order order = new(request?.BuyerId, address);
 

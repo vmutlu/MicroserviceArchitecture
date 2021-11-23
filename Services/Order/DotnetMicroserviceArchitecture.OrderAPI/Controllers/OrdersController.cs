@@ -2,6 +2,7 @@
 using DotnetMicroserviceArchitecture.Core.Services.Abstract;
 using DotnetMicroserviceArchitecture.Order.Application.Commands;
 using DotnetMicroserviceArchitecture.Order.Application.Querys;
+using DotnetMicroserviceArchitecture.OrderAPI.Constants;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace DotnetMicroserviceArchitecture.OrderAPI.Controllers
             _identityService = identityService;
         }
 
-        [HttpGet]
+        [HttpGet,Route(Route.HTTPGETORPOST_ORDERS)]
         public async Task<IActionResult> GetOrdersAsync()
         {
             var response = await _mediator.Send(new GetOrderByUserIdQuery { UserId = _identityService.GetUserId }).ConfigureAwait(false);
@@ -29,7 +30,7 @@ namespace DotnetMicroserviceArchitecture.OrderAPI.Controllers
             return Result(response);
         }
 
-        [HttpPost]
+        [HttpPost, Route(Route.HTTPGETORPOST_ORDERS)]
         public async Task<IActionResult> AddOrdersAsync(CreateOrderCommand createOrderCommand)
         {
             var response = await _mediator.Send(createOrderCommand).ConfigureAwait(false);

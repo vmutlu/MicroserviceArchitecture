@@ -1,3 +1,4 @@
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -13,12 +14,29 @@ namespace DotnetMicroserviceArchitecture.PaymentAPI
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)=>(Configuration)=(configuration);
+        public Startup(IConfiguration configuration) => (Configuration) = (configuration);
 
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
+            //configure masstransit
+            services.AddMassTransit(ms =>
+            {
+                //port: 5672
+                //uý screen: 15672
+                ms.UsingRabbitMq((context, config) =>
+                {
+                    config.Host(Configuration["RabbitMQURL"], "/", host =>
+                      {
+                          host.Username("guest");
+                          host.Password("guest");
+                      });
+                });
+            });
+
+            services.AddMassTransitHostedService();
+
             var requireAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub"); //userId bilgisi taþýyan sub keywordunu mapleme

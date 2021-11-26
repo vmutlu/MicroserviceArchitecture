@@ -1,6 +1,8 @@
 using DotnetMicroserviceArchitecture.Core.Services.Abstract;
 using DotnetMicroserviceArchitecture.Core.Services.Concrete;
+using DotnetMicroserviceArchitecture.Order.Application.Consumers;
 using DotnetMicroserviceArchitecture.Order.Infrastructure.Context;
+using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -24,6 +26,29 @@ namespace DotnetMicroserviceArchitecture.OrderAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            //configure masstransit
+            services.AddMassTransit(ms =>
+            {
+                //add consumer
+                ms.AddConsumer<CreateOrderMessageCommandConsumer>();
+
+                ms.UsingRabbitMq((context, config) =>
+                {
+                    config.Host(Configuration["RabbitMQURL"], "/", host =>
+                    {
+                        host.Username("guest");
+                        host.Password("guest");
+                    });
+
+                    config.ReceiveEndpoint("order-service", endp =>
+                     {
+                         endp.ConfigureConsumer<CreateOrderMessageCommandConsumer>(context);
+                     });
+                });
+            });
+
+            services.AddMassTransitHostedService();
+
             var requireAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub"); //userId bilgisi taþýyan sub keywordunu mapleme

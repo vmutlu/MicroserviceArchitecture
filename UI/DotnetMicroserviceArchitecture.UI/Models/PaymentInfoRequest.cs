@@ -7,8 +7,6 @@
         public string Expiration { get; set; }
         public string Cvv { get; set; }
         public decimal TotalPrice { get; set; }
-
-
         public OrderCreateRequest Order { get; set; }
     }
 }

@@ -5,6 +5,7 @@ using DotnetMicroserviceArchitecture.PaymentAPI.Constants;
 using DotnetMicroserviceArchitecture.PaymentAPI.DTOs;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -32,30 +33,39 @@ namespace DotnetMicroserviceArchitecture.PaymentAPI.Controllers
 
         private async Task SendRabbitMQMessageAsync(PaymentDTO paymentDTO)
         {
-            var sendEndpoint = await _sendEndpointProvider.GetSendEndpoint(new System.Uri("queue:orderService")).ConfigureAwait(false);
-
-            CreateOrderMessageCommand createOrderMessageCommand = new()
+            try
             {
-                BuyerId = paymentDTO.Order.BuyerId,
-                City = paymentDTO.Order.Adress.City,
-                Town = paymentDTO.Order.Adress.Town,
-                Line = paymentDTO.Order.Adress.Line,
-                Street = paymentDTO.Order.Adress.Street,
-                ZipCode = paymentDTO.Order.Adress.ZipCode
-            };
+                var sendEndpoint = await _sendEndpointProvider.GetSendEndpoint(new System.Uri("queue:order-service")).ConfigureAwait(false);
 
-            paymentDTO.Order.OrderItems.ForEach(x =>
-            {
-                createOrderMessageCommand.OrderItems.Add(new OrderItemCommand()
+                CreateOrderMessageCommand createOrderMessageCommand = new()
                 {
-                    Name = x.Name,
-                    OrderId = x.OrderId,
-                    Price = x.Price,
-                    URL = x.URL
-                });
-            });
+                    BuyerId = paymentDTO?.Order?.BuyerId,
+                    City = paymentDTO?.Order?.Adress?.City,
+                    Town = paymentDTO?.Order?.Adress?.Town,
+                    Line = paymentDTO?.Order?.Adress?.Line,
+                    Street = paymentDTO?.Order?.Adress?.Street,
+                    ZipCode = paymentDTO?.Order?.Adress?.ZipCode,
+                    OrderItems = new System.Collections.Generic.List<OrderItemCommand>()
+                };
 
-            await _sendEndpointProvider.Send<CreateOrderMessageCommand>(createOrderMessageCommand).ConfigureAwait(false);
+                paymentDTO.Order?.OrderItems?.ForEach(x =>
+                {
+                    createOrderMessageCommand.OrderItems.Add(new OrderItemCommand()
+                    {
+                        Name = x.Name,
+                        OrderId = x.OrderId,
+                        Price = x.Price,
+                        URL = x.URL
+                    });
+                });
+
+                await sendEndpoint.Send<CreateOrderMessageCommand>(createOrderMessageCommand).ConfigureAwait(false);
+            }
+            catch (System.Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }

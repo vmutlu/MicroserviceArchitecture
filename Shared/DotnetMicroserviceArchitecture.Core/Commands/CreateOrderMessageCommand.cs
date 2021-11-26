@@ -4,6 +4,10 @@ namespace DotnetMicroserviceArchitecture.Core.Commands
 {
     public class CreateOrderMessageCommand
     {
+        public CreateOrderMessageCommand()
+        {
+            OrderItems = new List<OrderItemCommand>();
+        }
         public string BuyerId { get; set; }
         public List<OrderItemCommand> OrderItems { get; set; } 
         public string City { get; set; }

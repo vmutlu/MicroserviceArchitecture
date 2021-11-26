@@ -48,6 +48,6 @@ namespace DotnetMicroserviceArchitecture.UI.Controllers
             return View();
         }
 
-        public async Task<IActionResult> CheckoutHistory() => View(await _orderService.GetOrderAsync().ConfigureAwait(false));
+        public async Task<IActionResult> MyCheckout() => View(await _orderService.GetOrderAsync().ConfigureAwait(false));
     }
 }

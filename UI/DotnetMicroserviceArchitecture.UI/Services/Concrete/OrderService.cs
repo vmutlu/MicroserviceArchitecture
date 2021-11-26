@@ -69,9 +69,14 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
 
         public async Task<List<OrderView>> GetOrderAsync()
         {
-            var responseRequest = await _httpClient.GetFromJsonAsync<Response<List<OrderView>>>("orders/orders").ConfigureAwait(false);
+            var response = await _httpClient.GetAsync("orders/orders").ConfigureAwait(false); 
 
-            return responseRequest.Data;
+            if (!response.IsSuccessStatusCode)
+                return null;
+
+            var responseData = await response.Content.ReadFromJsonAsync<Response<List<OrderView>>>().ConfigureAwait(false);
+
+            return responseData.Data;
         }
 
         public async Task<OrderSuspendView> SuspendOrderAsync(CheckOutInfoRequest checkOutInfoRequest)

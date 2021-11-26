@@ -26,7 +26,7 @@ namespace DotnetMicroserviceArchitecture.Order.Application.Handlers
         {
             var orders = await _orderContext.Orders.Include(x => x.OrderItems).Where(x => x.BuyerId == request.UserId).ToListAsync().ConfigureAwait(false);
 
-            if (orders.Any())
+            if (!orders.Any())
                 return Response<List<OrderDTO>>.Success(new List<OrderDTO>(), HttpStatusCode.OK.GetHashCode());
 
             var mappedOrderDTO = ObjectMapper.Mapper.Map<List<OrderDTO>>(orders);

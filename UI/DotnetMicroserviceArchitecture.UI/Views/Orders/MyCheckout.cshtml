@@ -34,11 +34,11 @@
                                             <th>Kurs ismi</th>
                                             <th>Kurs fiyat</th>
                                         </tr>
-                                        @foreach (var orderItem in item.OrderItem)
+                                        @foreach (var orderItem in item?.OrderItems)
                                         {
                                             <tr>
-                                                <td>@orderItem.Name</td>
-                                                <td>@orderItem.Price TL</td>
+                                                <td>@orderItem?.Name</td>
+                                                <td>@orderItem?.Price TL</td>
                                             </tr>
                                         }
                                     </table>

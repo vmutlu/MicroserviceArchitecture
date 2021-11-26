@@ -9,6 +9,6 @@ namespace DotnetMicroserviceArchitecture.Order.Application.DTOs
         public DateTime InsertedDate { get; private set; }
         public AdressDTO Adress { get; private set; }
         public string BuyerId { get; private set; }
-        public List<OrderItemDTO> OrderItem { get; private set; }
+        public List<OrderItemDTO> OrderItems { get; private set; }
     }
 }

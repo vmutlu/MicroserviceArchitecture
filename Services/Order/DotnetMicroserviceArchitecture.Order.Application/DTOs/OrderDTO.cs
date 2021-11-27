@@ -6,9 +6,9 @@ namespace DotnetMicroserviceArchitecture.Order.Application.DTOs
     public class OrderDTO
     {
         public int Id { get; set; }
-        public DateTime InsertedDate { get; private set; }
-        public AdressDTO Adress { get; private set; }
-        public string BuyerId { get; private set; }
-        public List<OrderItemDTO> OrderItems { get; private set; }
+        public DateTime InsertedDate { get; set; }
+        public AdressDTO Adress { get; set; }
+        public string BuyerId { get; set; }
+        public List<OrderItemDTO> OrderItems { get; set; }
     }
 }

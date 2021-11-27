@@ -10,8 +10,8 @@ namespace DotnetMicroserviceArchitecture.UI.Models
             OrderItems = new List<OrderItemView>();
         }
         public int Id { get; set; }
-        public DateTime InsertedDate { get; private set; }
-        public string BuyerId { get; private set; }
-        public List<OrderItemView> OrderItems { get; private set; }
+        public DateTime InsertedDate { get; set; }
+        public string BuyerId { get; set; }
+        public List<OrderItemView> OrderItems { get; set; }
     }
 }

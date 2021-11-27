@@ -4,6 +4,7 @@
 
 using DotnetMicroserviceArchitecture.IdentityServer.Data;
 using DotnetMicroserviceArchitecture.IdentityServer.Models;
+using DotnetMicroserviceArchitecture.IdentityServer.Services;
 using IdentityServer4;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -56,6 +57,7 @@ namespace DotnetMicroserviceArchitecture.IdentityServer
                 .AddAspNetIdentity<ApplicationUser>();
 
             builder.AddResourceOwnerValidator<DotnetMicroserviceArchitecture.IdentityServer.Services.PasswordValidator>();
+            builder.AddExtensionGrantValidator<TokenExchangeGrantValidator>();
 
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();

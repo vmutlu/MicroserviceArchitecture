@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Apsiyon Web UI</title>
+    <title>@ViewData["Title"] - ECommerce Web UI</title>
     <link href="~/lib/bootstrap-5.1/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -37,7 +37,7 @@
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <li><a class="dropdown-item" asp-controller="User" asp-action="MyProfile">Profil</a></li>
                                     <li><a class="dropdown-item" asp-controller="Orders" asp-action="MyCheckout">Ödemeler</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Basket" asp-action="MyBasket">Sepet</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Baskets" asp-action="Index">Sepet</a></li>
                                     <li><a class="dropdown-item" asp-controller="Auth" asp-action="LogOut">Çıkış</a></li>
                                 </ul>
                             </li>
@@ -62,7 +62,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - DotnetMicroserviceArchitecture.UI - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; @DateTime.Now.Year - Microservice Architecture - Design By:  <b> Veysel MUTLU </b>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

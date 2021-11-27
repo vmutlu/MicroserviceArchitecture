@@ -63,9 +63,9 @@
       "UpstreamPathTemplate": "/services/discount/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
+      "DelegatingHandlers": [ "TokenExchangeHandler" ], //delege bu microservise istek geldiðinde çalýþacak
       "AuthenticationOptions": {
-        "AuthenticationProviderKey": "GatewayScheme",
-        "AllowedScopes": [ "discount_fullpermission" ]
+        "AuthenticationProviderKey": "GatewayScheme"
       }
     },
     {
@@ -97,9 +97,9 @@
       "UpstreamPathTemplate": "/services/payment/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
+      "DelegatingHandlers": [ "TokenExchangeHandler" ], //delege bu microservise istek geldiðinde çalýþacak
       "AuthenticationOptions": {
-        "AuthenticationProviderKey": "GatewayScheme",
-        "AllowedScopes": [ "payment_fullpermission" ]
+        "AuthenticationProviderKey": "GatewayScheme"
       }
     }
   ],

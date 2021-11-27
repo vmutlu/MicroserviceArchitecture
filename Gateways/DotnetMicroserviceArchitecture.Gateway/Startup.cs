@@ -1,3 +1,4 @@
+using DotnetMicroserviceArchitecture.Gateway.Handlers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +16,8 @@ namespace DotnetMicroserviceArchitecture.Gateway
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient<TokenExchangeHandler>();
+
             services.AddAuthentication().AddJwtBearer("GatewayScheme", options =>
             {
                 options.Authority = Configuration["IdentityServer"]; //token kontrolü
@@ -22,7 +25,7 @@ namespace DotnetMicroserviceArchitecture.Gateway
                 options.RequireHttpsMetadata = false;
             });
 
-            services.AddOcelot();
+            services.AddOcelot().AddDelegatingHandler<TokenExchangeHandler>(); //TokenExchangeHandler nezaman devreye girsin ? config dosyasýnda belirtilecek
         }
 
         async public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

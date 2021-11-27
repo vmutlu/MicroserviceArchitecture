@@ -13,9 +13,9 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
         private readonly IPaymentService _paymentService;
         private readonly IBasketService _basketService;
         private readonly HttpClient _httpClient;
-        private readonly DotnetMicroserviceArchitecture.Core.Services.Abstract.IIdentityService _identityService;
+        private readonly Core.Services.Abstract.IIdentityService _identityService;
 
-        public OrderService(HttpClient httpClient, IPaymentService paymentService, IBasketService basketService, DotnetMicroserviceArchitecture.Core.Services.Abstract.IIdentityService identityService)
+        public OrderService(HttpClient httpClient, IPaymentService paymentService, IBasketService basketService, Core.Services.Abstract.IIdentityService identityService)
         {
             _httpClient = httpClient;
             _paymentService = paymentService;
@@ -69,14 +69,8 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
 
         public async Task<List<OrderView>> GetOrderAsync()
         {
-            var response = await _httpClient.GetAsync("orders/orders").ConfigureAwait(false); 
-
-            if (!response.IsSuccessStatusCode)
-                return null;
-
-            var responseData = await response.Content.ReadFromJsonAsync<Response<List<OrderView>>>().ConfigureAwait(false);
-
-            return responseData.Data;
+            var response = await _httpClient.GetFromJsonAsync<Response<List<OrderView>>>("orders/orders").ConfigureAwait(false); 
+            return response.Data;
         }
 
         public async Task<OrderSuspendView> SuspendOrderAsync(CheckOutInfoRequest checkOutInfoRequest)

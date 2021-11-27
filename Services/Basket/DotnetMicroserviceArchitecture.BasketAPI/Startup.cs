@@ -3,6 +3,8 @@ using DotnetMicroserviceArchitecture.BasketAPI.Services.Concrete;
 using DotnetMicroserviceArchitecture.BasketAPI.Settings;
 using DotnetMicroserviceArchitecture.Core.Services.Abstract;
 using DotnetMicroserviceArchitecture.Core.Services.Concrete;
+using DotnetMicroserviceArchitecture.Order.Application.Consumers;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -25,6 +27,29 @@ namespace DotnetMicroserviceArchitecture.BasketAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            //configure masstransit
+            services.AddMassTransit(ms =>
+            {
+                //add consumer
+                ms.AddConsumer<BasketChangeEventConsumer>();
+
+                ms.UsingRabbitMq((context, config) =>
+                {
+                    config.Host(Configuration["RabbitMQURL"], "/", host =>
+                    {
+                        host.Username("guest");
+                        host.Password("guest");
+                    });
+
+                    config.ReceiveEndpoint("order-service", endp =>
+                    {
+                        endp.ConfigureConsumer<BasketChangeEventConsumer>(context);
+                    });
+                });
+            });
+
+            services.AddMassTransitHostedService();
+
             var requireAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub"); //userId bilgisi taþýyan sub keywordunu mapleme

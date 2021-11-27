@@ -69,9 +69,7 @@ namespace DotnetMicroserviceArchitecture.IdentityServer
                           {
                               "gateway_fullpermission",
                               "order_fullpermission",
-                              "discount_fullpermission",
                               "basket_fullpermission",
-                              "payment_fullpermission",
                               IdentityServerConstants.StandardScopes.Email,
                               IdentityServerConstants.StandardScopes.OpenId,
                               IdentityServerConstants.StandardScopes.Profile,
@@ -83,6 +81,23 @@ namespace DotnetMicroserviceArchitecture.IdentityServer
                           RefreshTokenExpiration = TokenExpiration.Absolute,
                           AbsoluteRefreshTokenLifetime = (int)(DateTime.Now.AddDays(30) - DateTime.Now).TotalSeconds,
                           RefreshTokenUsage = TokenUsage.ReUse //reflesh token tekrar kullanılabilsin
+                      },
+
+
+                      new Client
+                      {
+                          ClientId = "token.exchange",
+                          ClientName = "Token Exchange Client",
+
+                          AllowedGrantTypes = new []{ "urn:ietf:params:oauth:grant-type:token-exchange" },
+                          ClientSecrets = { new Secret("secret".Sha256()) },
+                          AllowOfflineAccess = true, // offline özelliği kullanabilmek için açıldı
+                          AllowedScopes =
+                          {
+                              "discount_fullpermission",
+                              "payment_fullpermission",
+                              IdentityServerConstants.StandardScopes.OpenId
+                          }
                       }
                 };
     }

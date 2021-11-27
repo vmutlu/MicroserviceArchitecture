@@ -2,6 +2,7 @@ using DotnetMicroserviceArchitecture.CatalogAPI.Services.Abstract;
 using DotnetMicroserviceArchitecture.CatalogAPI.Services.Concrete;
 using DotnetMicroserviceArchitecture.CatalogAPI.Settings.Abstract;
 using DotnetMicroserviceArchitecture.CatalogAPI.Settings.Concrete;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,6 +26,23 @@ namespace DotnetMicroserviceArchitecture.CatalogAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            //configure masstransit
+            services.AddMassTransit(ms =>
+            {
+                //port: 5672
+                //uý screen: 15672
+                ms.UsingRabbitMq((context, config) =>
+                {
+                    config.Host(Configuration["RabbitMQURL"], "/", host =>
+                    {
+                        host.Username("guest");
+                        host.Password("guest");
+                    });
+                });
+            });
+
+            services.AddMassTransitHostedService();
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
             {
                 opt.Authority = Configuration["IdentityServer"]; //token kontrolü

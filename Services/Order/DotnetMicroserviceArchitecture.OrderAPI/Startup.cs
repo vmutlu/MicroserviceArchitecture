@@ -31,6 +31,7 @@ namespace DotnetMicroserviceArchitecture.OrderAPI
             {
                 //add consumer
                 ms.AddConsumer<CreateOrderMessageCommandConsumer>();
+                ms.AddConsumer<CatalogNameChangeEventConsumer>();
 
                 ms.UsingRabbitMq((context, config) =>
                 {
@@ -44,6 +45,11 @@ namespace DotnetMicroserviceArchitecture.OrderAPI
                      {
                          endp.ConfigureConsumer<CreateOrderMessageCommandConsumer>(context);
                      });
+
+                    config.ReceiveEndpoint("order-service-change", endp =>
+                    {
+                        endp.ConfigureConsumer<CatalogNameChangeEventConsumer>(context);
+                    });
                 });
             });
 

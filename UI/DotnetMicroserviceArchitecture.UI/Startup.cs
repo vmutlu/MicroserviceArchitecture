@@ -1,18 +1,11 @@
 using DotnetMicroserviceArchitecture.UI.Extensions;
-using DotnetMicroserviceArchitecture.UI.Handler;
-using DotnetMicroserviceArchitecture.UI.Helpers;
-using DotnetMicroserviceArchitecture.UI.Services.Abstract;
-using DotnetMicroserviceArchitecture.UI.Services.Concrete;
-using DotnetMicroserviceArchitecture.UI.Settings;
 using DotnetMicroserviceArchitecture.UI.Validators;
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
 
 namespace DotnetMicroserviceArchitecture.UI
 {

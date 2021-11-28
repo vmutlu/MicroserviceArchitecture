@@ -1,16 +1,9 @@
-using DotnetMicroserviceArchitecture.CatalogAPI.Services.Abstract;
-using DotnetMicroserviceArchitecture.CatalogAPI.Services.Concrete;
-using DotnetMicroserviceArchitecture.CatalogAPI.Settings.Abstract;
-using DotnetMicroserviceArchitecture.CatalogAPI.Settings.Concrete;
-using MassTransit;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using DotnetMicroserviceArchitecture.CatalogAPI.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
 namespace DotnetMicroserviceArchitecture.CatalogAPI
@@ -26,49 +19,7 @@ namespace DotnetMicroserviceArchitecture.CatalogAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //configure masstransit
-            services.AddMassTransit(ms =>
-            {
-                //port: 5672
-                //uý screen: 15672
-                ms.UsingRabbitMq((context, config) =>
-                {
-                    config.Host(Configuration["RabbitMQURL"], "/", host =>
-                    {
-                        host.Username("guest");
-                        host.Password("guest");
-                    });
-                });
-            });
-
-            services.AddMassTransitHostedService();
-
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
-            {
-                opt.Authority = Configuration["IdentityServer"]; //token kontrolü
-                opt.Audience = "resource_catalog";
-                opt.RequireHttpsMetadata = false;
-            });
-
-            services.AddAutoMapper(typeof(Startup));
-
-            #region option pattern creat services
-
-            services.Configure<DatabaseSettings>(Configuration.GetSection(nameof(DatabaseSettings)));
-            services.AddSingleton<IDatabaseSettings>(options =>
-            {
-                return options.GetRequiredService<IOptions<DatabaseSettings>>().Value;
-            });
-
-            #endregion
-
-            services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<ICourseService, CourseService>();
-
-            services.AddControllers(opt =>
-            {
-                opt.Filters.Add(new AuthorizeFilter()); //controller üzerine Authorize attributune gerek yok
-            });
+            services.AddServices(Configuration);
 
             services.AddSwaggerGen(c =>
             {

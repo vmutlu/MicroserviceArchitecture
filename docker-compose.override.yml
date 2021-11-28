@@ -6,7 +6,7 @@ services:
     ports: 
       - "27017:27017"
     volumes:
-      catalogdb_volume:/data/db
+      - catalogdb_volume:/data/db
   basketdb:
      container_name: basketdb
      restart: always
@@ -18,7 +18,7 @@ services:
     ports: 
       - "5432:5432"
     volumes:
-      discountdb_volume:/var/lib/postgres/data
+      - discountdb_volume:/var/lib/postgres/data
     environment:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=root
@@ -29,7 +29,7 @@ services:
     ports: 
       - "1433:1433"
     volumes:
-      identitydb_volume:/var/opt/mssql/data
+      - identitydb_volume:/var/opt/mssql/data
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=Password2020
@@ -39,7 +39,7 @@ services:
     ports: 
       - "1444:1433"
     volumes:
-      orderdb_volume:/var/opt/mssql/data
+      - orderdb_volume:/var/opt/mssql/data
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=Password2020

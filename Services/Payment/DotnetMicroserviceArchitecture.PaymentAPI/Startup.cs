@@ -1,14 +1,10 @@
-using MassTransit;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
+using DotnetMicroserviceArchitecture.PaymentAPI.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace DotnetMicroserviceArchitecture.PaymentAPI
 {
@@ -20,38 +16,7 @@ namespace DotnetMicroserviceArchitecture.PaymentAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //configure masstransit
-            services.AddMassTransit(ms =>
-            {
-                //port: 5672
-                //uý screen: 15672
-                ms.UsingRabbitMq((context, config) =>
-                {
-                    config.Host(Configuration["RabbitMQURL"], "/", host =>
-                      {
-                          host.Username("guest");
-                          host.Password("guest");
-                      });
-                });
-            });
-
-            services.AddMassTransitHostedService();
-
-            var requireAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
-
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub"); //userId bilgisi taþýyan sub keywordunu mapleme
-
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
-            {
-                opt.Authority = Configuration["IdentityServer"]; //token kontrolü
-                opt.Audience = "resource_payment";
-                opt.RequireHttpsMetadata = false;
-            });
-
-            services.AddControllers(opt =>
-            {
-                opt.Filters.Add(new AuthorizeFilter(requireAuthorizePolicy)); //controller üzerine Authorize attributune gerek yok. Authentice olmuþ kullanýcý ister
-            });
+            services.AddServices(Configuration);
 
             services.AddSwaggerGen(c =>
             {

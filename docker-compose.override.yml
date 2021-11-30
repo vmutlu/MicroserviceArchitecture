@@ -60,3 +60,12 @@ services:
       - "5001:80"
     depends_on:
       - catalogdb
+  identityserver_api:
+    container_name: identityserver_api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:DefaultConnection=Server=identitydb;Database=IdentityDB;Integrated Security=true;"
+    ports:
+      - "5000:80"
+    depends_on:
+      - identiydb

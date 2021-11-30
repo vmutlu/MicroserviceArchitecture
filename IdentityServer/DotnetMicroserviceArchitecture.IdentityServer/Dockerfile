@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim as build
 WORKDIR /app
 EXPOSE 80
-COPY IdentityServer/DotnetMicroserviceArchitecture.IdentityServer/*.csproj IdentityServer/DotnetMicroserviceArchitecture.IdentityServer/
+COPY Shared/DotnetMicroserviceArchitecture.Core/*.csproj Shared/DotnetMicroserviceArchitecture.Core/
 COPY IdentityServer/DotnetMicroserviceArchitecture.IdentityServer/*.csproj IdentityServer/DotnetMicroserviceArchitecture.IdentityServer/
 RUN dotnet restore IdentityServer/DotnetMicroserviceArchitecture.IdentityServer/*.csproj
 COPY . .

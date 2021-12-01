@@ -69,3 +69,15 @@ services:
       - "5000:80"
     depends_on:
       - identiydb
+  basket_api:
+   container_name: basket_api
+   environment:
+     - ASPNETCORE_ENVIRONMENT=Development
+     - RabbitMQURL:rabbitmq
+     - IdentityServer:http://identityserver.api:5000
+     - RedisSettings:Port=6379
+     - RedisSettings:Host=basketdb
+   ports:
+     - "5003:80"
+   depends_on:
+     - basketdb

@@ -88,5 +88,7 @@ services:
      - IdentityServer:http://identityserver.api:5000
    ports:
      - "5002:80"
-   depends_on:
-     - stockdb
+   volumes:
+    -type: bind
+    -source: D:\MicroserviceStockImages
+    -target: /app/wwwroot/images

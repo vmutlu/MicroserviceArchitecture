@@ -92,3 +92,10 @@ services:
     -type: bind
     -source: D:\MicroserviceStockImages
     -target: /app/wwwroot/images
+  discount_api:
+   container_name: discount_api
+   environment:
+     - ASPNETCORE_ENVIRONMENT=Development
+     - IdentityServer:http://identityserver.api:5000
+   ports:
+     - "5004:80"

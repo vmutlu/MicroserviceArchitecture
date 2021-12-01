@@ -81,3 +81,12 @@ services:
      - "5003:80"
    depends_on:
      - basketdb
+  stock_api:
+   container_name: stock_api
+   environment:
+     - ASPNETCORE_ENVIRONMENT=Development
+     - IdentityServer:http://identityserver.api:5000
+   ports:
+     - "5002:80"
+   depends_on:
+     - stockdb

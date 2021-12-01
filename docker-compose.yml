@@ -22,6 +22,11 @@ services:
     build:
       context: .
       dockerfile: IdentityServer/DotnetMicroserviceArchitecture.IdentityServer/Dockerfile
+  basket_api:
+    image: basket_image
+    build:
+      context: .
+      dockerfile: Services/Basket/DotnetMicroserviceArchitecture.BasketAPI/Dockerfile
 volumes:
   catalogdb_volume:
   discountdb_volume:

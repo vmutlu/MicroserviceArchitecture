@@ -42,6 +42,11 @@ services:
     build:
       context: .
       dockerfile: Services/Payment/DotnetMicroserviceArchitecture.PaymentAPI/Dockerfile
+  order_api:
+    image: order_image
+    build:
+      context: .
+      dockerfile: Services/Order/DotnetMicroserviceArchitecture.OrderAPI/Dockerfile
 volumes:
   catalogdb_volume:
   discountdb_volume:

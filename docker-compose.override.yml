@@ -53,8 +53,8 @@ services:
     container_name: catalog_api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - RabbitMQURL:rabbitmq
-      - IdentityServer:http://identityserver.api:5000
+      - RabbitMQURL=rabbitmq
+      - IdentityServer=http://identityserver.api:5000
       - DatabaseSettings:ConnectionStrings=mongodb://catalogdb:27017
     ports:
       - "5001:80"
@@ -73,10 +73,10 @@ services:
    container_name: basket_api
    environment:
      - ASPNETCORE_ENVIRONMENT=Development
-     - RabbitMQURL:rabbitmq
-     - IdentityServer:http://identityserver.api:5000
-     - RedisSettings:Port=6379
-     - RedisSettings:Host=basketdb
+     - RabbitMQURL=rabbitmq
+     - IdentityServer=http://identityserver.api:5000
+     - RedisSettings=Port=6379
+     - RedisSettings=Host=basketdb
    ports:
      - "5003:80"
    depends_on:
@@ -96,7 +96,7 @@ services:
    container_name: discount_api
    environment:
      - ASPNETCORE_ENVIRONMENT=Development
-     - IdentityServer:http://identityserver.api:5000
+     - IdentityServer=http://identityserver.api:5000
      - ConnectionStrings:PostgreSql="Server=discountdb;Port=5432;Database=postgres;User Id=postgres;Password=root;Integrated Security=true;Pooling=true;"
    ports:
      - "5004:80"
@@ -106,15 +106,18 @@ services:
    container_name: payment_api
    environment:
      - ASPNETCORE_ENVIRONMENT=Development
-     - IdentityServer:http://identityserver.api:5000
-     - RabbitMQURL:rabbitmq
+     - IdentityServer=http://identityserver.api:5000
+     - RabbitMQURL=rabbitmq
    ports:
      - "5006:80"
   order_api:
    container_name: order_api
    environment:
      - ASPNETCORE_ENVIRONMENT=Development
-     - IdentityServer:http://identityserver.api:5000
-     - RabbitMQURL:rabbitmq
+     - IdentityServer=http://identityserver.api:5000
+     - RabbitMQURL=rabbitmq
+     - ConnectionStrings:DefaultConnection="Server=orderdb;Database=OrderAPIDB;Integrated Security=true;"
    ports:
      - "5005:80"
+   depends_on:
+     - orderdb

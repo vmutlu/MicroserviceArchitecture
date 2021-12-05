@@ -110,3 +110,11 @@ services:
      - RabbitMQURL:rabbitmq
    ports:
      - "5006:80"
+  order_api:
+   container_name: order_api
+   environment:
+     - ASPNETCORE_ENVIRONMENT=Development
+     - IdentityServer:http://identityserver.api:5000
+     - RabbitMQURL:rabbitmq
+   ports:
+     - "5005:80"

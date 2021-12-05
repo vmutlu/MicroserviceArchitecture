@@ -131,3 +131,21 @@ services:
      - IdentityServer=http://identityserver.api
    ports:
      - "5010:80"
+  ui:
+   container_name: ui
+   restart: on-failure
+   environment:
+     - ASPNETCORE_ENVIRONMENT=Development
+     - ApiSettings:IdentityURL=http://identityserver.api
+     - ApiSettings:GatewayURL=http://gateway_api
+   ports:
+     - "5020:80"
+   depends_on:
+    - gateway_api
+    - identityserver_api
+    - catalog_api
+    - basket_api
+    - stock_api
+    - discount_api
+    - payment_api
+    - order_api

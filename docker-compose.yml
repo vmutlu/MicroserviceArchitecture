@@ -52,6 +52,11 @@ services:
     build:
       context: .
       dockerfile: Gateways/DotnetMicroserviceArchitecture.Gateway/Dockerfile
+  ui:
+    image: ui_image
+    build:
+      context: .
+      dockerfile: UI/DotnetMicroserviceArchitecture.UI/Dockerfile
 volumes:
   catalogdb_volume:
   discountdb_volume:

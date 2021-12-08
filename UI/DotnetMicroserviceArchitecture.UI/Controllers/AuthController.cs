@@ -17,10 +17,7 @@ namespace DotnetMicroserviceArchitecture.UI.Controllers
             _identityService = identityService;
         }
 
-        public IActionResult SignIn()
-        {
-            return View();
-        }
+        public IActionResult SignIn() => View();
 
         [HttpPost]
         public async Task<IActionResult> SignIn(SignInModel signInModel)
@@ -29,6 +26,29 @@ namespace DotnetMicroserviceArchitecture.UI.Controllers
                 return View();
 
             var response = await _identityService.SignIn(signInModel).ConfigureAwait(false);
+
+            if (!response.IsSuccess)
+            {
+                response.Errors.ForEach(x =>
+                {
+                    ModelState.AddModelError(String.Empty, x);
+                });
+
+                return View();
+            }
+
+            return RedirectToAction(nameof(Index), "Home");
+        }
+
+        public IActionResult SignUp() => View();
+
+        [HttpPost]
+        public async Task<IActionResult> SignUp(SignUpModel signUpModel)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            var response = await _identityService.SignUp(signUpModel).ConfigureAwait(false);
 
             if (!response.IsSuccess)
             {

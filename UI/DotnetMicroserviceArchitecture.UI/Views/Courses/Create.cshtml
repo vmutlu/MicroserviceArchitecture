@@ -7,7 +7,7 @@
 
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Kurs ekleme </h5>
+                <h5 class="card-title">Ürün Ekleme </h5>
 
                 <form asp-controller="Courses" asp-action="Create" method="post" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly"></div>
@@ -15,7 +15,7 @@
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label" asp-for="CategoryId"></label>
                         <select asp-for="CategoryId" class="form-control" asp-items="@ViewBag.categoryList">
-                            <option value="">kategori seçiniz</option>
+                            <option value="">Kategori Seçiniz</option>
                         </select>
 
                         <span class="text-danger" asp-validation-for="CategoryId"></span>
@@ -52,7 +52,7 @@
                         <input type="file" asp-for="PictureFile" class="form-control" />
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Kurs Kaydet</button>
+                    <button type="submit" class="btn btn-primary">Ürün Kaydet</button>
                 </form>
             </div>
         </div>

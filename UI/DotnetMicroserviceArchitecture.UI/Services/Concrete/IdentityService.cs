@@ -170,5 +170,11 @@ namespace DotnetMicroserviceArchitecture.UI.Services.Concrete
 
             return Response<bool>.Success(HttpStatusCode.OK.GetHashCode());
         }
+
+        //doldurulacak
+        public Task<Response<bool>> SignUp(SignUpModel signUpModel)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
